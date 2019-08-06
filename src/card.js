@@ -17,17 +17,13 @@ export function Card({label, delay}) {
             return;
         }
         const timer = setTimeout(() => {
-            otherSide();
+            turnAround();
         }, delay);
         return () => clearTimeout(timer);
-    }, [side]);
+    }, [side, delay]);
 
-    function otherSide() {
+    function turnAround() {
         setSide(s => !s);
-    }
-
-    function handleClick() {
-        otherSide();
     }
 
     function getSide() {
@@ -38,9 +34,8 @@ export function Card({label, delay}) {
         }
     }
 
-
     return (
-        <div className={'rp-card'} onClick={handleClick}>
+        <div className={'rp-card'} onClick={turnAround}>
             {getSide()}
         </div>
     );
