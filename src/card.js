@@ -1,18 +1,21 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import './card.css';
 import {Front} from "./front";
 import {Back} from "./back";
 import PropTypes from 'prop-types';
+import {GameContext} from "./react-pairs-game";
 
-const SIDE = {
+export const CardSide = {
     FRONT: true,
     BACK: false
 };
 
-export function Card({label, delay}) {
+export function Card({id, label, delay}) {
     const [side, setSide] = useState(null);
+    const {updateCardSide} = useContext(GameContext);
 
     useEffect(() => {
+        updateCardSide(id, side);
         if (!side) {
             return;
         }
@@ -20,14 +23,14 @@ export function Card({label, delay}) {
             turnAround();
         }, delay);
         return () => clearTimeout(timer);
-    }, [side, delay]);
+    }, [side, delay, id, updateCardSide]);
 
     function turnAround() {
         setSide(s => !s);
     }
 
     function getSide() {
-        if (side === SIDE.FRONT) {
+        if (side === CardSide.FRONT) {
             return <Front label={label}/>;
         } else {
             return <Back/>;
@@ -42,11 +45,13 @@ export function Card({label, delay}) {
 }
 
 Card.propTypes = {
+    id: PropTypes.string,
     label: PropTypes.string,
     delay: PropTypes.number
 };
 
 Card.defaultProps = {
+    id: "N/A",
     label: 'Front',
     delay: 3000
 };
