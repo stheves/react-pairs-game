@@ -21,7 +21,7 @@ export function ReactPairsGame({deckSize, deckTheme}) {
     function shuffleCards() {
         const cards = [];
         for (let i = 0; i < deckSize; i++) {
-            cards.push(<Card label={String(i)} key={i}/>);
+            cards.push(<Card label={String(i)} id={String(i)} key={i}/>);
         }
         return cards;
     }
