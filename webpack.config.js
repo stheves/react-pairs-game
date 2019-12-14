@@ -14,7 +14,7 @@ module.exports = {
          },
       ],
    },
-   output: {
+    output: {
       path: __dirname + '/dist',
       filename: 'react-pairs-game.js',
       library: 'ReactPairsGame',
@@ -26,5 +26,6 @@ module.exports = {
    },
    devServer: {
       contentBase: [__dirname + '/dist', __dirname + '/demo'],
+      port: 3000,
    },
 };
