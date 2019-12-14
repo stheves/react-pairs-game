@@ -5,27 +5,14 @@ module.exports = {
             {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
-                use: {
-                    loader: "babel-loader"
-                }
+                use: ['babel-loader']
             },
             {
-                test: /\.css$/i,
+                test: /\.css$/,
                 exclude: /node_modules/,
-                use: [
-                    'style-loader',
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            modules: true,
-                        },
-                    },
-                ],
+                use: ['style-loader', 'css-loader']
             }
         ]
-    },
-    resolve: {
-        extensions: ['*', '.js', '.jsx']
     },
     output: {
         path: __dirname + '/dist',
