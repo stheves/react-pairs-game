@@ -35,5 +35,11 @@
       "@babel/preset-env",
       "@babel/preset-react"
     ]
+  },
+  "prettier": {
+    "trailingComma": "all",
+    "tabWidth": 3,
+    "semi": false,
+    "singleQuote": true
   }
 }

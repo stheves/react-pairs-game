@@ -1,39 +1,40 @@
-import React, { useState } from "react";
-import "./react-pairs-game.css";
-import { Card, CardSide } from "./card";
+import React, {useState} from 'react'
+import './react-pairs-game.css'
+import {Card, CardSide} from './card'
 
 const defaultGameContext = {
     cardId: null,
-    updateCardSide: cardId => {}
-};
+    updateCardSide: cardId => {
+    },
+}
 
-export const GameContext = React.createContext(defaultGameContext);
+export const GameContext = React.createContext(defaultGameContext)
 
 export function ReactPairsGame({ deckSize, deckTheme }) {
     const [gameState, setGameState] = useState({
         updateCardSide: (cardId, side) => {
             console.log(
-                "update card: " +
-                    cardId +
-                    " " +
-                    (side === CardSide.BACK ? "Back" : "Front")
-            );
-            setGameState({ ...gameState, cardId: cardId });
-        }
-    });
+                'update card: ' +
+                cardId +
+                ' ' +
+                (side === CardSide.BACK ? 'Back' : 'Front'),
+            )
+            setGameState({...gameState, cardId: cardId})
+        },
+    })
 
     function shuffleCards() {
-        const cards = [];
+        const cards = []
         for (let i = 0; i < deckSize; i++) {
-            cards.push(<Card label={String(i)} id={String(i)} key={i} />);
+            cards.push(<Card label={String(i)} id={String(i)} key={i}/>)
         }
-        return cards;
+        return cards
     }
 
-    const cards = shuffleCards();
+    const cards = shuffleCards()
     return (
         <GameContext.Provider value={gameState}>
             <div className={`rp-playground ${deckTheme}`}>{cards}</div>
         </GameContext.Provider>
-    );
+    )
 }
