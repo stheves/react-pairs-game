@@ -1,5 +1,5 @@
 module.exports = {
-   entry: './src/index.js',
+   entry: { app: './src/index.js' },
    module: {
       rules: [
          {
@@ -14,7 +14,7 @@ module.exports = {
          },
       ],
    },
-    output: {
+   output: {
       path: __dirname + '/dist',
       filename: 'react-pairs-game.js',
       library: 'ReactPairsGame',
@@ -25,7 +25,14 @@ module.exports = {
       'react-dom': 'ReactDOM',
    },
    devServer: {
-      contentBase: [__dirname + '/dist', __dirname + '/demo'],
+      publicPath: '/static/',
+      contentBase: [__dirname + '/demo/'],
       port: 3000,
+      watchContentBase: true,
+      compress: true,
+      overlay: {
+         warnings: false,
+         errors: true,
+      },
    },
 };
