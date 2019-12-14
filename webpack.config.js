@@ -5,7 +5,7 @@ module.exports = {
             {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
-                use: ['babel-loader'],
+                use: ['babel-loader', 'eslint-loader'],
             },
             {
                 test: /\.css$/,
@@ -17,7 +17,8 @@ module.exports = {
     output: {
         path: __dirname + '/dist',
         filename: 'react-pairs-game.js',
-        libraryTarget: 'amd',
+        library: 'ReactPairsGame',
+        libraryTarget: 'umd',
     },
     externals: {
         react: 'React',
