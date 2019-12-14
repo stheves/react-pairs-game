@@ -1,9 +1,13 @@
-import React, { useReducer } from 'react';
+import React, { useContext, useReducer } from 'react';
 import rootReducer from './reducers';
 
 const initial_state = {};
 
 const StateContext = React.createContext(null);
+
+const useGameContext = ()=>{
+    return useContext(StateContext);
+};
 
 const createInstance = (state = initial_state) => {
    return { context: state };
@@ -17,4 +21,4 @@ const Game = ({ instance = createInstance(), children }) => {
    );
 };
 
-export { Game, StateContext, createInstance };
+export { Game, useGameContext, createInstance };

@@ -1,20 +1,20 @@
-import React, { useContext } from 'react';
-import { StateContext } from './Game';
+import React from 'react';
+import { useGameContext } from './Game';
 import operations from './operations';
-import './Board.css';
+import BoardComponent from './BoardComponent';
 
 const Board = () => {
-   const [ state, dispatch ] = useContext(StateContext);
+   const [state, dispatch] = useGameContext();
 
    const handleCardSwitch = () => {
-       dispatch(operations.switchCard(!state.cardSwitched));
+      dispatch(operations.switchCard(!state.cardSwitched));
    };
 
    return (
-      <div className={'game-board'}>
-         <p>Card switched: {state.cardSwitched ? 'Yes' : 'No'}</p>
-         <button onClick={handleCardSwitch}>Switch</button>
-      </div>
+      <BoardComponent
+         cardSwitched={state.cardSwitched}
+         switchOnClickHandler={handleCardSwitch}
+      />
    );
 };
 
