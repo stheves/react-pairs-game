@@ -1,10 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import { ReactPairsGame } from './react-pairs-game';
 
 function render(domElement) {
-   ReactDOM.render(<App />, domElement);
+   ReactDOM.render(
+      <ReactPairsGame deckSize={16} deckTheme={'Marvel'} />,
+      domElement,
+   );
 }
 
 export { render };
