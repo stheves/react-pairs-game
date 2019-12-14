@@ -1,11 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import { ReactPairsGame } from './react-pairs-game';
+import { createInstance, Game } from './Game';
+import Board from './Board';
 
 function render(domElement) {
+   const instance = createInstance();
    ReactDOM.render(
-      <ReactPairsGame deckSize={16} deckTheme={'Marvel'} />,
+      <Game instance={instance}>
+         <Board />
+      </Game>,
       domElement,
    );
 }
