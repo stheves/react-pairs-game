@@ -1,5 +1,7 @@
 .game-navbar {
-
+    position: fixed;
+    top: 0;
+    height: 75px;
 }
 
 .game-navbar-nav {

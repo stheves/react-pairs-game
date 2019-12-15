@@ -15,7 +15,7 @@ const Board = () => {
    };
 
    const onClickStartGame = () => {
-      dispatch(operations.startGame());
+      dispatch(operations.resetCards());
    };
 
    const Cards = game.board.cards.map((card, i) => (

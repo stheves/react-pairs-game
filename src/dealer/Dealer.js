@@ -5,6 +5,8 @@ import operations from '../operations';
 const Dealer = () => {
    const [game, dispatch] = useGame();
 
+    console.log('game state: ', game);
+
    // start the game on init
    useEffect(() => {
       dispatch(operations.resetCards());

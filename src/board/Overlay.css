@@ -1,5 +1,5 @@
 .overlay {
-   position: fixed;
-   right: var(--padding);
-   top: var(--padding);
+   position: absolute;
+   right: 35%;
+   top: 0;
 }
