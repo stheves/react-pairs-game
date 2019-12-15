@@ -11,9 +11,7 @@ const CardComponent = ({ card, onCardClick }) => {
          : () => <Back />;
    return (
       <div className={'game-card'} onClick={onCardClick}>
-         <div className={'game-card-inner'}>
-            <Side />
-         </div>
+         <Side />
       </div>
    );
 };

@@ -1,5 +1,8 @@
+const webpack = require('webpack');
+const ErrorOverlayPlugin = require('error-overlay-webpack-plugin');
+
 module.exports = {
-   entry: { app: './src/index.js' },
+   entry: ['./src/index.js'],
    module: {
       rules: [
          {
@@ -24,15 +27,16 @@ module.exports = {
       react: 'React',
       'react-dom': 'ReactDOM',
    },
+   plugins: [
+      new webpack.HotModuleReplacementPlugin(),
+      new ErrorOverlayPlugin(),
+   ],
+   devtool: 'source-map',
    devServer: {
       publicPath: '/static/',
       contentBase: [__dirname + '/demo/'],
       port: 3000,
-      watchContentBase: true,
       compress: true,
-      overlay: {
-         warnings: false,
-         errors: true,
-      },
+      watchContentBase: true,
    },
 };
