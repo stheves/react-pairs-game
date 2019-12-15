@@ -24,7 +24,7 @@ const Board = () => {
          onCardClick={() => handleSwitchCard(card.id)}
       />
    ));
-   const menu = <Menu onStartClick={onClickStartGame} />;
+
    return (
       <BoardComponent>
          <Menu onStartClick={onClickStartGame} />
