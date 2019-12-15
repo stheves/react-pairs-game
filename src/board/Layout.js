@@ -1,11 +1,9 @@
 import React from 'react';
 import './Layout.css';
-import Menu from './Menu';
 
 const Layout = ({ children = [] }) => {
    return (
       <div className={'game-wrapper'}>
-         <Menu />
          <div className={'game-board'}>
             {children.map((Child, i) => {
                return (
