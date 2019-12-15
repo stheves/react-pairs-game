@@ -1,6 +1,6 @@
 import types from './types';
 
-function cardReducer(state, action) {
+function rootReducer(state, action) {
    switch (action.type) {
       case types.CARD_SWITCH_REQUEST:
          return {
@@ -19,10 +19,12 @@ function cardReducer(state, action) {
                }),
             },
          };
-
+      case types.BOARD_SET_CARDS: {
+          return { ...state, board: { cards: action.cards } };
+      }
       default:
          return state;
    }
 }
 
-export default cardReducer;
+export default rootReducer;

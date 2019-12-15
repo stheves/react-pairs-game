@@ -1,8 +1,14 @@
+// card types
 const CARD_SWITCH_REQUEST = 'CARD_SWITCH_REQUEST';
+// TODO move to card
 const CARD_SIDE_BACK = 'CARD_SIDE_BACK';
 const CARD_SIDE_FRONT = 'CARD_SIDE_FRONT';
 
+// board types
+const BOARD_SET_CARDS = 'BOARD_SET_CARDS';
+
 export default {
+   BOARD_SET_CARDS,
    CARD_SWITCH_REQUEST,
    CARD_SIDE_BACK,
    CARD_SIDE_FRONT,

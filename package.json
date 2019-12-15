@@ -14,8 +14,7 @@
    },
    "dependencies": {
       "react": "^16.12.0",
-      "react-dom": "^16.12.0",
-      "use-combined-reducers": "^1.0.4"
+      "react-dom": "^16.12.0"
    },
    "peerDependencies": {
       "react": "*",
@@ -26,7 +25,6 @@
       "@babel/preset-env": "^7.7.6",
       "@babel/preset-react": "^7.7.4",
       "@types/react": "^16.9.16",
-      "@types/use-combined-reducers": "^1.0.0",
       "babel-eslint": "^10.0.3",
       "babel-loader": "^8.0.6",
       "css-loader": "^3.3.2",

@@ -4,15 +4,17 @@ import Menu from './Menu';
 
 const Layout = ({ children = [] }) => {
    return (
-      <div className={'game-board'}>
+      <div className={'game-wrapper'}>
          <Menu />
-         {children.map((Child, i) => {
-            return (
-               <div className={'game-board-item'} key={i}>
-                  {Child}
-               </div>
-            );
-         })}
+         <div className={'game-board'}>
+            {children.map((Child, i) => {
+               return (
+                  <div className={'game-board-item'} key={i}>
+                     {Child}
+                  </div>
+               );
+            })}
+         </div>
       </div>
    );
 };
