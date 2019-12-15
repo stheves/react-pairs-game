@@ -2,6 +2,7 @@ import React from 'react';
 import types from '../types';
 import Back from './Back';
 import Front from './Front';
+import './CardComponent.css';
 
 const CardComponent = ({ card, onCardClick }) => {
    const Side =
@@ -10,7 +11,9 @@ const CardComponent = ({ card, onCardClick }) => {
          : () => <Back />;
    return (
       <div className={'game-card'} onClick={onCardClick}>
-         <Side />
+         <div className={'game-card-inner'}>
+            <Side />
+         </div>
       </div>
    );
 };
