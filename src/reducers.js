@@ -5,6 +5,7 @@ function rootReducer(state, action) {
       case types.CARD_SWITCH_REQUEST:
          return {
             ...state,
+            // update the board
             board: {
                cards: state.board.cards.map(card => {
                   if (card.id === action.id) {
@@ -18,9 +19,25 @@ function rootReducer(state, action) {
                   }
                }),
             },
+            // update the match
+            match: {
+               ...state.match,
+               players: {
+                  ...state.match.players,
+                  [state.match.players.active]: {
+                     actionCount:
+                        state.match.players[state.match.players.active]
+                           .actionCount + 1,
+                  },
+               },
+            },
          };
       case types.BOARD_SET_CARDS: {
-          return { ...state, board: { cards: action.cards } };
+         return {
+            ...state,
+            board: { cards: action.cards },
+            match: { ...state.match, started: true },
+         };
       }
       default:
          return state;

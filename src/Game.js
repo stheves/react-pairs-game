@@ -19,6 +19,11 @@ const INITIAL_STATE = {
    },
    match: {
       started: false,
+      players: {
+         active: 'one',
+         one: { actionCount: 0 },
+         two: { actionCount: 0 },
+      },
    },
 };
 

@@ -26,7 +26,7 @@ const Board = () => {
    ));
 
    return (
-      <BoardComponent>
+      <BoardComponent match={game.match}>
          <Menu onStartClick={onClickStartGame} />
          <Layout>{Cards}</Layout>
       </BoardComponent>

@@ -5,9 +5,11 @@ import operations from '../operations';
 const Dealer = () => {
    const [game, dispatch] = useGame();
 
+   // start the game on init
    useEffect(() => {
       dispatch(operations.startGame());
    }, []);
+
 
    // only logic
    return null;
