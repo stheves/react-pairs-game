@@ -1,10 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createInstance } from './Game';
+import { Game } from './Game';
+import Dealer from './dealer/Dealer';
+import Board from './board/Board';
 
 function render(domElement) {
-   const instance = createInstance();
-   ReactDOM.render(instance, domElement);
+   ReactDOM.render(
+      <Game>
+         <Dealer />
+         <Board />
+      </Game>,
+      domElement,
+   );
 }
 
 export { render };

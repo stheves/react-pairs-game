@@ -1,0 +1,8 @@
+.game-card-front {
+   margin: 0 auto;
+}
+
+.game-card-front .game-card-value {
+   font-size: 64px;
+   font-weight: bold;
+}

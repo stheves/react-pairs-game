@@ -1,11 +1,24 @@
 import React from 'react';
-import { useGameContext } from '../Game';
-import BoardComponent from './BoardComponent';
+import { useGame } from '../Game';
+import Layout from './Layout';
+import CardComponent from '../card/CardComponent';
+import operations from '../operations';
 
 const Board = () => {
-   const [state, dispatch] = useGameContext();
+   const [game, dispatch] = useGame();
 
-   return <BoardComponent cards={state.board.cards} />;
+   const handleSwitchCard = cardId => {
+      dispatch(operations.switchCard(cardId));
+   };
+
+   const Cards = game.board.cards.map((card, i) => (
+      <CardComponent
+         key={i}
+         card={card}
+         onCardClick={() => handleSwitchCard(card.id)}
+      />
+   ));
+   return <Layout>{Cards}</Layout>;
 };
 
 export default Board;

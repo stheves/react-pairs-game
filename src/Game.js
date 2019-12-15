@@ -1,38 +1,44 @@
 import React, { useContext, useReducer } from 'react';
 import rootReducer from './reducers';
-import Board from './board/Board';
-import Dealer from './dealer/Dealer';
-import PlayerComponent from './player/PlayerComponent';
+import types from './types';
 
-const initial_state = {
-   board: { cards: [{ id: 1 }] },
-   deck: {},
+const INITIAL_STATE = {
+   board: {
+      cards: [
+         {
+            id: 1,
+            value: 1,
+            side: types.CARD_SIDE_BACK,
+         },
+         {
+            id: 2,
+            value: 1,
+            side: types.CARD_SIDE_BACK,
+         },
+      ],
+   },
+   match: {
+      started: false,
+   },
 };
 
-const StateContext = React.createContext(null);
+const GameState = React.createContext(null);
 
-const useGameContext = () => {
-   return useContext(StateContext);
+const useGame = () => {
+   return useContext(GameState);
 };
 
 const Game = ({ instance = createInstance(), children }) => {
-   const context = useReducer(rootReducer, instance.context);
-
    return (
-      <StateContext.Provider value={context}>{children}</StateContext.Provider>
+      <GameState.Provider value={instance.context}>
+         {children}
+      </GameState.Provider>
    );
 };
 
-const createInstance = (state = initial_state) => {
-   const instance = { context: state };
-   return (
-      <Game instance={instance}>
-         <Dealer />
-         <PlayerComponent />
-         <PlayerComponent />
-         <Board />
-      </Game>
-   );
+const createInstance = (state = INITIAL_STATE) => {
+   const context = useReducer(rootReducer, state);
+   return { context: context };
 };
 
-export { Game, useGameContext, createInstance };
+export { Game, useGame };

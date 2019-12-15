@@ -1,0 +1,12 @@
+.game-board {
+    width: 1000px;
+    height: 800px;
+    border: 2px solid black;
+}
+
+.game-board-item {
+    width: 125px;
+    height: 150px;
+    border: 1px solid black;
+    margin: 15px;
+}
