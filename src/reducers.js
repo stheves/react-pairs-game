@@ -32,11 +32,47 @@ function rootReducer(state, action) {
                },
             },
          };
+      case types.MATCH_START:
+         return {
+            ...state,
+            match: {
+               ...state.match,
+               started: action.value,
+            },
+         };
+      case types.MATCH_SET_WINNER:
+         return { ...state, match: { ...state.match, winner: action.id } };
+      case types.ROUND_INCREMENT_COUNT:
+         return {
+            ...state,
+            match: { ...state.match, round: state.match.round + 1 },
+         };
+      case types.PLAYER_SET_ACTIVE:
+         return {
+            ...state,
+            match: {
+               ...state.match,
+               players: { ...state.match.players, active: action.id },
+            },
+         };
+      case types.PLAYER_INCREMENT_COUNT:
+         return {
+            ...state,
+            match: {
+               ...state.match,
+               players: {
+                  ...state.match.players,
+                  [action.id]: {
+                     actionCount:
+                        state.match.players[action.id].actionCount + 1,
+                  },
+               },
+            },
+         };
       case types.BOARD_SET_CARDS: {
          return {
             ...state,
             board: { cards: action.cards },
-            match: { ...state.match, started: true },
          };
       }
       default:

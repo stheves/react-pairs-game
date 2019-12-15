@@ -11,7 +11,11 @@ const Overlay = ({ match }) => {
             <br />
             Player one actions: {match.players.one.actionCount}
             <br />
-            Player tow actions: {match.players.two.actionCount}
+            Player two actions: {match.players.two.actionCount}
+            <br />
+            Winner: {match.winner}
+            <br />
+            Round: {match.round}
          </p>
       </div>
    );

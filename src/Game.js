@@ -19,6 +19,8 @@ const INITIAL_STATE = {
    },
    match: {
       started: false,
+      round: 0,
+      winner: null,
       players: {
          active: 'one',
          one: { actionCount: 0 },

@@ -7,9 +7,13 @@ const Dealer = () => {
 
    // start the game on init
    useEffect(() => {
-      dispatch(operations.startGame());
+      dispatch(operations.resetCards());
+      dispatch(operations.setMatchStarted(true));
+      dispatch(operations.incrementRound());
+      dispatch(operations.setActivePlayer('one'));
+      dispatch(operations.incrementPlayerAction('one'));
+      dispatch(operations.setMatchWinner('two'));
    }, []);
-
 
    // only logic
    return null;
