@@ -5,6 +5,7 @@ import CardComponent from '../card/CardComponent';
 import operations from '../operations';
 import BoardComponent from './BoardComponent';
 import Menu from './Menu';
+import Overlay from './Overlay';
 
 const Board = () => {
    const [game, dispatch] = useGame();
@@ -27,6 +28,7 @@ const Board = () => {
 
    return (
       <BoardComponent match={game.match}>
+         <Overlay match={game.match} />
          <Menu onStartClick={onClickStartGame} />
          <Layout>{Cards}</Layout>
       </BoardComponent>

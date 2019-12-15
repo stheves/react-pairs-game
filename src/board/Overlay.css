@@ -1,0 +1,5 @@
+.overlay {
+   position: fixed;
+   right: var(--padding);
+   top: var(--padding);
+}

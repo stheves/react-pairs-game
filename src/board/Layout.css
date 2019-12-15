@@ -5,8 +5,8 @@
 .game-board {
    display: grid;
    grid-template-columns: auto auto auto auto auto;
-   grid-gap: 15px 50px;
-   padding: 15px;
+   grid-gap: var(--padding) var(--padding);
+   padding: var(--padding);
    border: 2px solid black;
    border-radius: var(--main-border-radius);
    height: 100%;
