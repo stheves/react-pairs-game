@@ -1,5 +1,5 @@
 import React from 'react';
-import { useGame } from '../Game';
+import { useGame } from '../game/Game';
 import Layout from './Layout';
 import CardComponent from '../card/CardComponent';
 import operations from '../operations';

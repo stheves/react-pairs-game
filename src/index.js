@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Game } from './Game';
+import { Game } from './game/Game';
 import Dealer from './dealer/Dealer';
 import Board from './board/Board';
 import './index.css';

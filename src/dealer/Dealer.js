@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useGame } from '../Game';
+import { useGame } from '../game/Game';
 import operations from '../operations';
 
 const Dealer = () => {

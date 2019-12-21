@@ -1,6 +1,6 @@
 import React, { useContext, useReducer } from 'react';
-import rootReducer from './reducers';
-import types from './types';
+import rootReducer from '../reducers';
+import types from '../types';
 
 const INITIAL_STATE = {
    board: {
