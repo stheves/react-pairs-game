@@ -1,7 +1,7 @@
 import React from 'react';
-import './Overlay.css';
+import './GameStats.css';
 
-const Overlay = ({ match }) => {
+const GameStats = ({ match }) => {
    return (
       <div className={'overlay'}>
          <div className={'overlay-item'}>
@@ -17,4 +17,4 @@ const Overlay = ({ match }) => {
    );
 };
 
-export default Overlay;
+export default GameStats;
