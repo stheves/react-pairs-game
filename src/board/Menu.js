@@ -10,6 +10,11 @@ const Menu = ({ onStartClick }) => {
                   Start
                </a>
             </li>
+            <li className={'game-navbar-item'}>
+               <a href={'#'} className={'game-nav-link'} onClick={onStartClick}>
+                  Other
+               </a>
+            </li>
          </ul>
       </nav>
    );

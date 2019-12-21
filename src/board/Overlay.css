@@ -1,5 +1,7 @@
 .overlay {
-   position: absolute;
-   right: 35%;
-   top: 0;
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
+.overlay-item {
+
 }

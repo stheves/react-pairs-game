@@ -5,5 +5,5 @@
     height: var(--main-height);
     max-width: var(--main-width);
     max-height: var(--main-height);
-    margin: 75px auto;
+    margin: 0 auto;
 }
