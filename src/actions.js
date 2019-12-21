@@ -6,11 +6,11 @@ const switchCard = cardId => {
 };
 
 const startMatch = () => {
-    const num = 20;
-    const cards = [];
-    for (let i = 0; i < num; i++) {
-        cards.push({ id: i, value: i, side: types.CARD_SIDE_BACK });
-    }
+   const num = 20;
+   const cards = [];
+   for (let i = 0; i < num; i++) {
+      cards.push({ id: i, value: i % (num / 2), side: types.CARD_SIDE_BACK });
+   }
    return { type: types.MATCH_START, cards: cards };
 };
 
