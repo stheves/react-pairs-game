@@ -1,7 +1,7 @@
 import React from 'react';
 import { useGame } from '../game/Game';
 import Layout from './Layout';
-import CardComponent from '../card/CardComponent';
+import CardComponent from './CardComponent';
 import acions from '../actions';
 import BoardComponent from './BoardComponent';
 import Menu from './Menu';

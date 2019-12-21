@@ -1,31 +1,31 @@
 .game-navbar {
-    width: 100%;
-    background-color: var(--color-grey-light-25);
-    overflow: hidden;
+   width: 100%;
+   background-color: var(--color-grey-dark-75);
+   overflow: hidden;
 }
 
-.game-navbar-nav {
-    height: 100%;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
+ul.game-navbar-nav {
+   height: 100%;
+   list-style-type: none;
+   margin: 0;
+   padding: 0;
 }
 
-.game-navbar-item {
-    height: 100%;
-    float: left;
+ul > li.game-navbar-item {
+   height: 100%;
+   float: left;
 }
 
-.game-nav-link {
-    padding: var(--padding);
-    height: 100%;
-    text-decoration: none;
-    text-align: center;
-    display: block;
-    color: var(--link-color);
+ul > li a.game-nav-link {
+   padding: var(--padding);
+   height: 100%;
+   text-decoration: none;
+   text-align: center;
+   display: block;
+   color: var(--link-color);
 }
 
-.game-nav-link:hover {
-    background-color: var(--link-color);
-    color: white;
+ul > li a.game-nav-link:hover {
+   background-color: var(--link-color);
+   color: white;
 }

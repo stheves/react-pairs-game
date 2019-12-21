@@ -2,16 +2,24 @@ import types from './types';
 
 const nextActivePlayer = match => {
    const current = match.active;
+   // if(match.players[current])
    const keys = Object.keys(match.players);
    const next = keys.indexOf(current) + 1;
    const nextIdx = next >= keys.length ? 0 : next;
    return keys[nextIdx];
 };
 
+const computeNextRound = match => {
+   return match.players[match.active].actionCount > 0
+      ? match.round + 1
+      : match.round;
+};
+
 const rootReducer = (state, action) => {
    switch (action.type) {
       case types.CARD_SWITCH_REQUEST: {
          const nextActive = nextActivePlayer(state.match);
+         const nextRound = computeNextRound(state.match);
          return {
             ...state,
             // update the board
@@ -32,7 +40,7 @@ const rootReducer = (state, action) => {
             match: {
                ...state.match,
                active: nextActive,
-               round: state.match.round + 1,
+               round: nextRound,
                players: {
                   ...state.match.players,
                   [state.match.active]: {

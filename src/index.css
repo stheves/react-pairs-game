@@ -1,20 +1,37 @@
+/*noinspection CssUnknownTarget*/
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 
 :root {
-   --color-primary: #1c8a3a;
+   --color-white: rgb(255, 255, 255);
    --color-grey: rgb(37, 37, 37);
+   --color-grey-light: rgba(37, 37, 37, 1);
    --color-grey-light-25: rgba(37, 37, 37, 0.25);
-   --main-width: 500px;
-   --main-height: 300px;
-   --main-border-radius: 10px;
+   --color-grey-light-50: rgba(37, 37, 37, 0.5);
+   --color-grey-light-75: rgba(37, 37, 37, 0.75);
+   --color-grey-dark: rgba(10, 10, 10, 1);
+   --color-grey-dark-25: rgba(10, 10, 10, 0.25);
+   --color-grey-dark-50: rgba(10, 10, 10, 0.5);
+   --color-grey-dark-75: rgba(10, 10, 10, 0.75);
+   --color-primary: #1c8a3a;
+
+   --main-width: 550px;
+   --main-height: 100%;
    --padding: 15px;
+   --margin: 15px;
+
    --link-color: var(--color-primary);
    --font-family: 'Roboto', sans-serif;
-}
+   --font-color: var(--color-white);
+   --font-size: 12px;
+   --font-weight: normal;
 
-body,
-html {
-   margin: 0;
-   padding: 0;
-   font-family: var(--font-family);
+   --border-size: 2px;
+   --border-size-lg: 3px;
+   --border-size-sm: 1px;
+   --border-style: solid;
+   --border: var(--border-size) var(--border-style) var(--color-grey-light-75);
+   --border-lg: var(--border-size-lg) var(--border-style)
+      var(--color-grey-light-75);
+   --border-sm: var(--border-size-sm) var(--border-style)
+      var(--color-grey-light-75);
 }

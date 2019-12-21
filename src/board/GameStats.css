@@ -1,8 +1,15 @@
 .overlay {
-    display: grid;
-    text-align: center;
-    grid-template-columns: auto auto auto auto;
+   display: grid;
+   grid-template-columns: auto auto auto auto;
+   background-color: var(--color-grey-dark-50);
+   color: white;
 }
 .overlay-item {
+   padding: var(--margin);
+}
+.overlay-item-title {
+   margin-right: var(--margin);
+}
 
+.overlay-item-stat {
 }

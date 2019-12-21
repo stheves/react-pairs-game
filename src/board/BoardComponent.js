@@ -1,7 +1,7 @@
 import React from 'react';
 import './BoardComponent.css';
 
-const BoardComponent = ({ children, match }) => {
+const BoardComponent = ({ children }) => {
    return <div className={'board-main'}>{children}</div>;
 };
 
