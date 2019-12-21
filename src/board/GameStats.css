@@ -1,6 +1,7 @@
 .overlay {
     display: grid;
-    grid-template-columns: auto auto auto;
+    text-align: center;
+    grid-template-columns: auto auto auto auto;
 }
 .overlay-item {
 

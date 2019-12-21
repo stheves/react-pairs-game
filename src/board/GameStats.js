@@ -9,8 +9,9 @@ const GameStats = ({ match }) => {
          </div>
          <div className={'overlay-item'}>Active Player: {match.active}</div>
          <div className={'overlay-item'}>
-            Winner: {match.winner ? match.winner : 'None'} Round: {match.round}
+            Winner: {match.winner ? match.winner : 'None'}
          </div>
+         <div className={'overlay-item'}>Round: {match.round}</div>
       </div>
    );
 };
