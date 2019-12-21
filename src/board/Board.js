@@ -2,7 +2,7 @@ import React from 'react';
 import { useGame } from '../game/Game';
 import Layout from './Layout';
 import CardComponent from '../card/CardComponent';
-import operations from '../operations';
+import acions from '../actions';
 import BoardComponent from './BoardComponent';
 import Menu from './Menu';
 import GameStats from './GameStats';
@@ -11,11 +11,11 @@ const Board = () => {
    const [game, dispatch] = useGame();
 
    const handleSwitchCard = cardId => {
-      dispatch(operations.switchCard(cardId));
+      dispatch(acions.switchCard(cardId));
    };
 
    const onClickStartGame = () => {
-      dispatch(operations.resetCards());
+      dispatch(acions.startMatch());
    };
 
    const Cards = game.board.cards.map((card, i) => (

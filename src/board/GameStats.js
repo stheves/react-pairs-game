@@ -7,11 +7,9 @@ const GameStats = ({ match }) => {
          <div className={'overlay-item'}>
             Started: {match.started ? 'Yes' : 'Not yet'}
          </div>
+         <div className={'overlay-item'}>Active Player: {match.active}</div>
          <div className={'overlay-item'}>
-            Active Player: {match.players.active}
-         </div>
-         <div className={'overlay-item'}>
-            Winner: {match.winner} Round: {match.round}
+            Winner: {match.winner ? match.winner : 'None'} Round: {match.round}
          </div>
       </div>
    );

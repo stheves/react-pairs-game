@@ -1,8 +1,17 @@
 import types from './types';
 
-function rootReducer(state, action) {
+const nextActivePlayer = match => {
+   const current = match.active;
+   const keys = Object.keys(match.players);
+   const next = keys.indexOf(current) + 1;
+   const nextIdx = next >= keys.length ? 0 : next;
+   return keys[nextIdx];
+};
+
+const rootReducer = (state, action) => {
    switch (action.type) {
-      case types.CARD_SWITCH_REQUEST:
+      case types.CARD_SWITCH_REQUEST: {
+         const nextActive = nextActivePlayer(state.match);
          return {
             ...state,
             // update the board
@@ -22,62 +31,32 @@ function rootReducer(state, action) {
             // update the match
             match: {
                ...state.match,
+               active: nextActive,
+               round: state.match.round + 1,
                players: {
                   ...state.match.players,
-                  [state.match.players.active]: {
+                  [state.match.active]: {
                      actionCount:
-                        state.match.players[state.match.players.active]
-                           .actionCount + 1,
+                        state.match.players[state.match.active].actionCount + 1,
                   },
                },
             },
          };
+      }
       case types.MATCH_START:
          return {
             ...state,
-            match: {
-               ...state.match,
-               started: action.value,
-            },
-         };
-      case types.MATCH_SET_WINNER:
-         return { ...state, match: { ...state.match, winner: action.id } };
-      case types.ROUND_INCREMENT_COUNT:
-         return {
-            ...state,
-            match: { ...state.match, round: state.match.round + 1 },
-         };
-      case types.PLAYER_SET_ACTIVE:
-         return {
-            ...state,
-            match: {
-               ...state.match,
-               players: { ...state.match.players, active: action.id },
-            },
-         };
-      case types.PLAYER_INCREMENT_COUNT:
-         return {
-            ...state,
-            match: {
-               ...state.match,
-               players: {
-                  ...state.match.players,
-                  [action.id]: {
-                     actionCount:
-                        state.match.players[action.id].actionCount + 1,
-                  },
-               },
-            },
-         };
-      case types.BOARD_SET_CARDS: {
-         return {
-            ...state,
             board: { cards: action.cards },
+            match: {
+               ...state.match,
+               round: 1,
+               active: Object.keys(state.match.players)[0],
+               started: true,
+            },
          };
-      }
       default:
          return state;
    }
-}
+};
 
 export default rootReducer;

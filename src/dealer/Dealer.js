@@ -1,20 +1,14 @@
 import React, { useEffect } from 'react';
 import { useGame } from '../game/Game';
-import operations from '../operations';
+import actions from '../actions';
+import types from '../types';
 
 const Dealer = () => {
-   const [game, dispatch] = useGame();
-
-    console.log('game state: ', game);
+   const dispatch = useGame()[1];
 
    // start the game on init
    useEffect(() => {
-      dispatch(operations.resetCards());
-      dispatch(operations.setMatchStarted(true));
-      dispatch(operations.incrementRound());
-      dispatch(operations.setActivePlayer('one'));
-      dispatch(operations.incrementPlayerAction('one'));
-      dispatch(operations.setMatchWinner('two'));
+      dispatch(actions.startMatch());
    }, []);
 
    // only logic

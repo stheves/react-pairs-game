@@ -21,8 +21,8 @@ const INITIAL_STATE = {
       started: false,
       round: 0,
       winner: null,
+      active: 'one',
       players: {
-         active: 'one',
          one: { actionCount: 0 },
          two: { actionCount: 0 },
       },
