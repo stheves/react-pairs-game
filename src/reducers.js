@@ -1,25 +1,34 @@
 import types from './types';
 
-const nextActivePlayer = match => {
+const nextPlayer = match => {
    const current = match.active;
-   // if(match.players[current])
    const keys = Object.keys(match.players);
    const next = keys.indexOf(current) + 1;
    const nextIdx = next >= keys.length ? 0 : next;
    return keys[nextIdx];
 };
 
-const computeNextRound = match => {
-   return match.players[match.active].actionCount > 0
-      ? match.round + 1
-      : match.round;
+const nextRound = match => {
+   return match.players[match.active].moves > 0 ? match.round + 1 : match.round;
 };
+
+function getPlayer(state) {
+   return state.match.players[state.match.active];
+}
 
 const rootReducer = (state, action) => {
    switch (action.type) {
       case types.CARD_SWITCH_REQUEST: {
-         const nextActive = nextActivePlayer(state.match);
-         const nextRound = computeNextRound(state.match);
+
+         const activePlayerId = state.match.active;
+         const hasMovesLeft = getPlayer(state).moves > 0;
+         const isLastMove = getPlayer(state).moves === 1;
+         const nextActive = isLastMove
+            ? nextPlayer(state.match)
+            : activePlayerId;
+         const moves = isLastMove ? 2 : getPlayer(state).moves - 1;
+         const round = nextRound(state.match);
+
          return {
             ...state,
             // update the board
@@ -40,12 +49,11 @@ const rootReducer = (state, action) => {
             match: {
                ...state.match,
                active: nextActive,
-               round: nextRound,
+               round: round,
                players: {
                   ...state.match.players,
                   [state.match.active]: {
-                     actionCount:
-                        state.match.players[state.match.active].actionCount + 1,
+                     moves: moves,
                   },
                },
             },

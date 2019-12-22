@@ -23,8 +23,8 @@ const INITIAL_STATE = {
       winner: null,
       active: 'one',
       players: {
-         one: { actionCount: 0 },
-         two: { actionCount: 0 },
+         one: { moves: 2, hits: [] },
+         two: { moves: 2, hits: [] },
       },
    },
 };
