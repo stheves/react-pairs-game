@@ -12,7 +12,7 @@ const GameStats = ({ match }) => {
          </div>
          <div className={'overlay-item'}>
             <span className={'overlay-item-title'}>Active Player:</span>
-            <span className={'overlay-item-stat'}>{match.active}</span>
+            <span className={'overlay-item-stat'}>{match.activePlayer}</span>
          </div>
          <div className={'overlay-item'}>
             <span className={'overlay-item-title'}>Winner:</span>

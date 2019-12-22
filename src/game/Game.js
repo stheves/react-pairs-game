@@ -21,10 +21,20 @@ const INITIAL_STATE = {
       started: false,
       round: 0,
       winner: null,
-      active: 'one',
+      activePlayer: 'one',
+      moves: [
+         {
+            player: 'one',
+            card: 1,
+         },
+         {
+            player: 'one',
+            card: 2,
+         },
+      ],
       players: {
-         one: { moves: 2, hits: [] },
-         two: { moves: 2, hits: [] },
+         one: { hits: [] },
+         two: { hits: [] },
       },
    },
 };
