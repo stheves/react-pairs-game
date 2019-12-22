@@ -4,34 +4,15 @@ import types from '../types';
 
 const INITIAL_STATE = {
    board: {
-      cards: [
-         {
-            id: 1,
-            value: 1,
-            side: types.CARD_SIDE_BACK,
-         },
-         {
-            id: 2,
-            value: 1,
-            side: types.CARD_SIDE_BACK,
-         },
-      ],
+      cards: [],
    },
    match: {
       started: false,
+      ended: false,
       round: 0,
       winner: null,
       activePlayer: 'one',
-      moves: [
-         {
-            player: 'one',
-            card: 1,
-         },
-         {
-            player: 'one',
-            card: 2,
-         },
-      ],
+      moves: [],
       players: {
          one: { hits: [] },
          two: { hits: [] },

@@ -7,7 +7,13 @@ const GameStats = ({ match }) => {
          <div className={'overlay-item'}>
             <span className={'overlay-item-title'}>Started:</span>
             <span className={'overlay-item-stat'}>
-               {match.started ? 'Yes' : 'Not yet'}
+               {match.started ? 'Yes' : 'No'}
+            </span>
+         </div>
+         <div className={'overlay-item'}>
+            <span className={'overlay-item-title'}>Ended:</span>
+            <span className={'overlay-item-stat'}>
+               {match.ended ? 'Yes' : 'No'}
             </span>
          </div>
          <div className={'overlay-item'}>
