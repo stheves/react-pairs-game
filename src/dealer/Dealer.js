@@ -7,7 +7,7 @@ const Dealer = () => {
    // start the game on init
    useEffect(() => {
       dispatch(actions.startMatch());
-   }, []);
+   }, [dispatch]);
 
    // only logic
    return null;

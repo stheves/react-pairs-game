@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useGame } from '../game/Game';
 import Layout from './Layout';
 import CardComponent from './CardComponent';
@@ -9,9 +9,26 @@ import GameStats from './GameStats';
 
 const Board = () => {
    const [game, dispatch] = useGame();
+   const [clicks, setClicks] = useState([]);
+
+   useEffect(() => {
+      if (clicks.length === 1) {
+         const clear = setTimeout(() => {
+            for (let id in clicks) {
+               dispatch(actions.makeMove(id));
+            }
+         }, 3000);
+         return () => clearTimeout(clear);
+      }
+   }, [clicks, dispatch]);
 
    const handleClickCard = cardId => {
-      dispatch(actions.makeMove(cardId));
+      if (clicks.length < 2) {
+         setClicks([...clicks, cardId]);
+         dispatch(actions.chooseCard(cardId));
+      } else {
+         setClicks([]);
+      }
    };
 
    const onClickStartGame = () => {
