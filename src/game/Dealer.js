@@ -3,6 +3,7 @@ import actions from '../actions';
 import Board from '../board/Board';
 import { useGame } from './Game';
 import GameStats from './GameStats';
+import { CARD_SIDE_BACK } from '../board/CardComponent';
 
 function shuffle(a) {
    for (let i = a.length - 1; i > 0; i--) {
@@ -10,6 +11,25 @@ function shuffle(a) {
       [a[i], a[j]] = [a[j], a[i]];
    }
    return a;
+}
+
+function computeWinner(state) {
+   let max = -1;
+   let winner = null;
+   Object.keys(state.match.players).forEach(k => {
+      const hitsCount = state.match.players[k].hits.length;
+      if (hitsCount > max) {
+         max = hitsCount;
+         winner = k;
+      } else if (hitsCount === max) {
+         winner = 'Draw';
+      }
+   });
+   return winner;
+}
+
+function isGameOver(state) {
+   return state.board.cards.filter(c => c.side === CARD_SIDE_BACK).length === 0;
 }
 
 function useShuffle(game, dispatch) {
@@ -20,6 +40,10 @@ function useShuffle(game, dispatch) {
          dispatch(actions.startMatch(cards));
       }
    }, [game.match.started, dispatch]);
+}
+
+function getCard(cards, id) {
+   return cards.find(c => c.id === id);
 }
 
 const nextPlayerId = match => {
@@ -37,30 +61,45 @@ function addMove(match, cardIds) {
 
 const Dealer = () => {
    const [game, dispatch] = useGame();
-   const [clicks, setClicks] = useState([]);
+   const [selectedCards, setSelectedCards] = useState([]);
 
    useShuffle(game, dispatch);
 
    useEffect(() => {
-      if (clicks.length === 2) {
+      if (selectedCards.length === 2) {
          const handle = setTimeout(() => {
-            // TODO next round as an action
-            const nextPlayer = nextPlayerId(game.match);
-            const move = addMove(game.match, clicks);
-            const nextRound = game.match.round + 1;
-            clicks.forEach(id => dispatch(actions.switchCard(id)));
+            // TODO split this up in multiple useEffect hooks
+            // end game
+            const gameOver = isGameOver(game);
+            if (gameOver) {
+               dispatch(actions.endGame(computeWinner(game), new Date()));
+               setSelectedCards([]);
+               return;
+            }
 
-            setClicks([]);
+            // make move
+            const nextPlayer = nextPlayerId(game.match);
+            const move = addMove(game.match, selectedCards);
+            const nextRound = game.match.round + 1;
+            const isHit =
+               getCard(game.board.cards, selectedCards[0]).value ===
+               getCard(game.board.cards, selectedCards[1]).value;
+            const hit = isHit ? [...selectedCards] : null;
+            dispatch(actions.makeMove(move, nextPlayer, nextRound, hit));
+            !isHit &&
+               selectedCards.forEach(id => dispatch(actions.switchCard(id)));
+
+            setSelectedCards([]);
          }, game.switchCardTimeout);
          return () => clearTimeout(handle);
       }
-   }, [game.match, game.switchCardTimeout, clicks, dispatch]);
+   }, [game, selectedCards, dispatch]);
 
    function handleClickCard(cardId) {
-      if (clicks.length >= 2) {
+      if (selectedCards.length >= 2) {
          return;
       }
-      setClicks([...clicks, cardId]);
+      setSelectedCards([...selectedCards, cardId]);
       dispatch(actions.switchCard(cardId));
    }
 

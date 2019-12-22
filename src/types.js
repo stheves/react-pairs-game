@@ -1,11 +1,13 @@
 const MAKE_MOVE = 'MAKE_MOVE';
 const MATCH_START = 'MATCH_START';
+const MATCH_END = 'MATCH_END';
 const SWITCH_CARD = 'SWITCH_CARD';
 const RESET_GAME = 'RESET_GAME';
 
 export default {
    SWITCH_CARD,
    MATCH_START,
+   MATCH_END,
    MAKE_MOVE,
    RESET_GAME,
 };
