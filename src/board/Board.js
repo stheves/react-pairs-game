@@ -10,25 +10,28 @@ import GameStats from './GameStats';
 const Board = () => {
    const [game, dispatch] = useGame();
    const [clicks, setClicks] = useState([]);
+   const [loading, setLoading] = useState(false);
 
    useEffect(() => {
-      if (clicks.length === 1) {
+      if (clicks.length === 2) {
+         setLoading(true);
          const clear = setTimeout(() => {
-            for (let id in clicks) {
-               dispatch(actions.makeMove(id));
+            for (let idx in clicks) {
+               dispatch(actions.switchCard(clicks[idx]));
             }
+            setClicks([]);
+            setLoading(false);
          }, 3000);
          return () => clearTimeout(clear);
       }
    }, [clicks, dispatch]);
 
    const handleClickCard = cardId => {
-      if (clicks.length < 2) {
-         setClicks([...clicks, cardId]);
-         dispatch(actions.chooseCard(cardId));
-      } else {
-         setClicks([]);
+      if (loading || clicks.length === 2) {
+         return;
       }
+      setClicks([...clicks, cardId]);
+      dispatch(actions.chooseCard(cardId));
    };
 
    const onClickStartGame = () => {

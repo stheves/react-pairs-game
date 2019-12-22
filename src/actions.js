@@ -10,7 +10,7 @@ const generateCards = () => {
    const num = 20;
    const cards = [];
    for (let i = 0; i < num; i++) {
-      cards.push({ id: i, value: i % (num / 2), side: CARD_SIDE_BACK });
+      cards.push({ id: String(i), value: i % (num / 2), side: CARD_SIDE_BACK });
    }
    return cards;
 };
