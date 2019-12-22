@@ -1,5 +1,6 @@
 import React from 'react';
 import './Menu.css';
+import PropTypes from 'prop-types';
 
 const Menu = ({ onStartClick }) => {
    return (
@@ -13,6 +14,10 @@ const Menu = ({ onStartClick }) => {
          </ul>
       </nav>
    );
+};
+
+Menu.propTypes = {
+   onStartClick: PropTypes.func,
 };
 
 export default Menu;

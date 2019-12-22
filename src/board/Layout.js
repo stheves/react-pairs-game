@@ -1,5 +1,6 @@
 import React from 'react';
 import './Layout.css';
+import PropTypes from 'prop-types';
 
 const Layout = ({ children = [] }) => {
    return (
@@ -15,6 +16,10 @@ const Layout = ({ children = [] }) => {
          </div>
       </div>
    );
+};
+
+Layout.propTypes = {
+   children: PropTypes.array,
 };
 
 export default Layout;

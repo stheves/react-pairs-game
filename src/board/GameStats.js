@@ -1,5 +1,6 @@
 import React from 'react';
 import './GameStats.css';
+import PropTypes from 'prop-types';
 
 const GameStats = ({ match }) => {
    return (
@@ -43,7 +44,7 @@ const GameStats = ({ match }) => {
          {Object.keys(match.players).length &&
             Object.keys(match.players).map(playerId => {
                return (
-                  <div key={playerId}>
+                  <React.Fragment key={playerId}>
                      <div className={'game-stats-item'}>
                         <span className={'game-stats-item-title'}>
                            Player {playerId} Hits:
@@ -54,11 +55,15 @@ const GameStats = ({ match }) => {
                            {match.players[playerId].hits.length}
                         </span>
                      </div>
-                  </div>
+                  </React.Fragment>
                );
             })}
       </div>
    );
+};
+
+GameStats.propTypes = {
+   match: PropTypes.object,
 };
 
 export default GameStats;
