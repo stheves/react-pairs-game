@@ -102,6 +102,8 @@ function computeWinner(state) {
       if (hitsCount > max) {
          max = hitsCount;
          winner = k;
+      } else if (hitsCount === max) {
+          winner = 'Draw';
       }
    });
    return winner;
