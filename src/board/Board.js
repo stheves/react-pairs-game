@@ -1,58 +1,34 @@
-import React, { useEffect, useState } from 'react';
-import { useGame } from '../game/Game';
+import React from 'react';
 import Layout from './Layout';
 import CardComponent from './CardComponent';
-import actions from '../actions';
 import BoardComponent from './BoardComponent';
-import Menu from './Menu';
-import GameStats from './GameStats';
+import PropTypes from 'prop-types';
 
-const Board = () => {
-   const [game, dispatch] = useGame();
-   const [clicks, setClicks] = useState([]);
-   const [loading, setLoading] = useState(false);
-
-   useEffect(() => {
-      if (clicks.length === 2) {
-         setLoading(true);
-         const clear = setTimeout(() => {
-            for (let idx in clicks) {
-               dispatch(actions.switchCard(clicks[idx]));
-            }
-            setClicks([]);
-            setLoading(false);
-         }, 3000);
-         return () => clearTimeout(clear);
-      }
-   }, [clicks, dispatch]);
-
-   const handleClickCard = cardId => {
-      if (loading || clicks.length === 2) {
-         return;
-      }
-      setClicks([...clicks, cardId]);
-      dispatch(actions.chooseCard(cardId));
-   };
-
-   const onClickStartGame = () => {
-      dispatch(actions.startMatch());
-   };
-
+const Board = ({ onClickCard, game }) => {
    const Cards = game.board.cards.map((card, i) => (
       <CardComponent
          key={i}
          card={card}
-         onCardClick={() => handleClickCard(card.id)}
+         onCardClick={() => onClickCard(card.id)}
       />
    ));
 
    return (
-      <BoardComponent match={game.match}>
-         <Menu onStartClick={onClickStartGame} />
-         <GameStats match={game.match} />
+      <BoardComponent>
          <Layout>{Cards}</Layout>
       </BoardComponent>
    );
+};
+
+Board.propTypes = {
+   onClickCard: PropTypes.func,
+   game: PropTypes.object,
+};
+
+// noinspection JSUnusedGlobalSymbols
+Board.defaultProps = {
+   onClickCard: () => {},
+   game: {},
 };
 
 export default Board;

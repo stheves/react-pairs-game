@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 const Layout = ({ children = [] }) => {
    return (
-      <div className={'game-wrapper'}>
+      <div className={'game-board-wrapper'}>
          <div className={'game-board'}>
             {children.map((Child, i) => {
                return (

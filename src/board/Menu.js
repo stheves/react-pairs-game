@@ -20,4 +20,8 @@ Menu.propTypes = {
    onStartClick: PropTypes.func,
 };
 
+Menu.defaultProps = {
+   onStartClick: () => {},
+};
+
 export default Menu;

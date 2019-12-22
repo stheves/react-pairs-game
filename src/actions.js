@@ -15,27 +15,22 @@ const generateCards = () => {
    return cards;
 };
 
-const startMatch = () => {
-   const cards = generateCards();
+const startMatch = (cards = generateCards()) => {
    return { type: types.MATCH_START, cards: cards };
-};
-
-const resetMatch = () => {
-   return { type: types.MATCH_RESET };
-};
-
-const chooseCard = cardId => {
-   return { type: types.CHOOSE_CARD, id: cardId };
 };
 
 const switchCard = cardId => {
    return { type: types.SWITCH_CARD, id: cardId };
 };
 
+const resetGame = initState => {
+   return { type: types.RESET_GAME, initialState: initState };
+};
+
 export default {
+   generateCards,
    switchCard,
-   chooseCard,
    makeMove,
    startMatch,
-   resetMatch,
+   resetGame,
 };

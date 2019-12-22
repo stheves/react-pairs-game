@@ -1,9 +1,12 @@
 import React, { useContext, useReducer } from 'react';
 import rootReducer from '../reducers';
 import PropTypes from 'prop-types';
+import GameContainer from './GameContainer';
 
-export const INITIAL_STATE = {
+const INITIAL_STATE = {
+   switchCardTimeout: 3000,
    board: {
+      frozen: false,
       cards: [],
    },
    match: {
@@ -26,22 +29,25 @@ const useGame = () => {
    return useContext(GameState);
 };
 
-const Game = ({ instance = createInstance(), children }) => {
+const useGameDispatch = () => {
+   return useGame()[1];
+};
+
+const Game = ({ instance = createInstance() }) => {
+   const context = useReducer(rootReducer, instance.context);
    return (
-      <GameState.Provider value={instance.context}>
-         {children}
+      <GameState.Provider value={context}>
+         <GameContainer initialState={instance.context} />
       </GameState.Provider>
    );
 };
 
 const createInstance = (state = INITIAL_STATE) => {
-   const context = useReducer(rootReducer, state);
-   return { context: context };
+   return { context: state };
 };
 
 Game.propTypes = {
    instance: PropTypes.object,
-   children: PropTypes.array,
 };
 
-export { Game, useGame };
+export { Game, useGame, useGameDispatch };

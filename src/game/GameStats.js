@@ -66,4 +66,8 @@ GameStats.propTypes = {
    match: PropTypes.object,
 };
 
+GameStats.defaultProps = {
+   match: { players: {} },
+};
+
 export default GameStats;

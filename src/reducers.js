@@ -1,6 +1,5 @@
 import types from './types';
 import { CARD_SIDE_BACK, CARD_SIDE_FRONT } from './board/CardComponent';
-import { INITIAL_STATE } from './game/Game';
 
 const nextPlayerId = match => {
    const current = match.activePlayer;
@@ -136,27 +135,15 @@ function makeMove(state, action) {
    };
 }
 
-function chooseCard(state, action) {
-   // no change if card already uncovered
-   if (getCard(state, action.id).side === CARD_SIDE_FRONT) {
-      return state;
-   }
-   return { ...state, board: updateBoard(state, action) };
-}
-
-function startMatch(action) {
+function startMatch(state, action) {
    return {
-      ...INITIAL_STATE,
+      ...state,
       board: { cards: action.cards },
       match: {
-         ...INITIAL_STATE.match,
+         ...state.match,
          started: new Date(),
       },
    };
-}
-
-function resetMatch() {
-   return { ...INITIAL_STATE };
 }
 
 function switchCard(state, action) {
@@ -165,17 +152,14 @@ function switchCard(state, action) {
 
 const rootReducer = (state, action) => {
    switch (action.type) {
-      case types.CHOOSE_CARD:
-         return chooseCard(state, action);
       case types.SWITCH_CARD:
          return switchCard(state, action);
-      case types.MAKE_MOVE: {
+      case types.MAKE_MOVE:
          return makeMove(state, action);
-      }
-      case types.MATCH_RESET:
-         return resetMatch();
       case types.MATCH_START:
-         return startMatch(action);
+         return startMatch(state, action);
+      case types.RESET_GAME:
+         return { ...action.initialState };
       default:
          return state;
    }

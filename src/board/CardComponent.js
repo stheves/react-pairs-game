@@ -19,4 +19,9 @@ CardComponent.propTypes = {
    onCardClick: PropTypes.func,
 };
 
+CardComponent.defaultProps = {
+   card: {},
+   onCardClick: () => {},
+};
+
 export default CardComponent;
