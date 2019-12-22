@@ -4,11 +4,19 @@ import Board from '../board/Board';
 import { useGame } from './Game';
 import GameStats from './GameStats';
 
-function useStartMatchDetection(game, dispatch) {
+function shuffle(a) {
+   for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+   }
+   return a;
+}
+
+function useShuffle(game, dispatch) {
    useEffect(() => {
       if (!game.match.started) {
          // start the game on init
-         const cards = actions.generateCards();
+         const cards = shuffle(actions.generateCards());
          dispatch(actions.startMatch(cards));
       }
    }, [game.match.started, dispatch]);
@@ -22,8 +30,8 @@ const nextPlayerId = match => {
    return keys[nextIdx];
 };
 
-function addMove(state, cardIds) {
-   const activePlayerId = state.match.activePlayer;
+function addMove(match, cardIds) {
+   const activePlayerId = match.activePlayer;
    return { player: activePlayerId, cards: cardIds };
 }
 
@@ -31,17 +39,22 @@ const Dealer = () => {
    const [game, dispatch] = useGame();
    const [clicks, setClicks] = useState([]);
 
-   useStartMatchDetection(game, dispatch);
+   useShuffle(game, dispatch);
 
    useEffect(() => {
       if (clicks.length === 2) {
          const handle = setTimeout(() => {
+            // TODO next round as an action
+            const nextPlayer = nextPlayerId(game.match);
+            const move = addMove(game.match, clicks);
+            const nextRound = game.match.round + 1;
             clicks.forEach(id => dispatch(actions.switchCard(id)));
+
             setClicks([]);
          }, game.switchCardTimeout);
          return () => clearTimeout(handle);
       }
-   }, [game.switchCardTimeout, clicks, dispatch]);
+   }, [game.match, game.switchCardTimeout, clicks, dispatch]);
 
    function handleClickCard(cardId) {
       if (clicks.length >= 2) {
