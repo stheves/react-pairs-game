@@ -138,7 +138,7 @@ function makeMove(state, action) {
 
 const rootReducer = (state, action) => {
    switch (action.type) {
-      case types.CARD_SWITCH_REQUEST: {
+      case types.MAKE_MOVE: {
          return makeMove(state, action);
       }
       case types.MATCH_RESET:

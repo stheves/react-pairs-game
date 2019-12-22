@@ -3,7 +3,7 @@ import { CARD_SIDE_BACK } from './board/CardComponent';
 
 // card actions
 const switchCard = cardId => {
-   return { type: types.CARD_SWITCH_REQUEST, id: cardId };
+   return { type: types.MAKE_MOVE, id: cardId };
 };
 
 const generateCards = () => {
