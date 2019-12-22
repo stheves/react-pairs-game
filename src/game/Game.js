@@ -1,15 +1,14 @@
 import React, { useContext, useReducer } from 'react';
 import rootReducer from '../reducers';
-import types from '../types';
 
-const INITIAL_STATE = {
+export const INITIAL_STATE = {
    board: {
       cards: [],
    },
    match: {
       started: false,
       ended: false,
-      round: 0,
+      round: 1,
       winner: null,
       activePlayer: 'one',
       moves: [],

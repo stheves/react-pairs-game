@@ -1,4 +1,6 @@
 import types from './types';
+import { CARD_SIDE_BACK, CARD_SIDE_FRONT } from './board/CardComponent';
+import { INITIAL_STATE } from './game/Game';
 
 const nextPlayerId = match => {
    const current = match.activePlayer;
@@ -47,9 +49,7 @@ function updateBoard(state, action) {
       cards: state.board.cards.map(card => {
          if (card.id === action.id) {
             const side =
-               card.side === types.CARD_SIDE_FRONT
-                  ? types.CARD_SIDE_BACK
-                  : types.CARD_SIDE_FRONT;
+               card.side === CARD_SIDE_FRONT ? CARD_SIDE_BACK : CARD_SIDE_FRONT;
             return { ...card, side: side };
          } else {
             return card;
@@ -91,9 +91,7 @@ function updateMatch(state, action) {
 }
 
 function isGameOver(state) {
-   return (
-      state.match.ended || state.match.moves.length === state.board.cards.length
-   );
+   return state.match.moves.length === state.board.cards.length;
 }
 
 function computeWinner(state) {
@@ -109,37 +107,46 @@ function computeWinner(state) {
    return winner;
 }
 
+function makeMove(state, action) {
+   // no updates if match has ended
+   if (state.match.ended) {
+      return state;
+   }
+
+   // check if game over
+   if (isGameOver(state)) {
+      let winner = computeWinner(state);
+      return {
+         ...state,
+         match: { ...state.match, ended: true, winner: winner },
+      };
+   }
+
+   // no change if card already uncovered
+   if (getCard(state, action.id).side === CARD_SIDE_FRONT) {
+      return state;
+   }
+
+   return {
+      ...state,
+      board: updateBoard(state, action),
+      match: updateMatch(state, action),
+   };
+}
+
 const rootReducer = (state, action) => {
    switch (action.type) {
       case types.CARD_SWITCH_REQUEST: {
-         // check finished
-         if (isGameOver(state)) {
-            let winner = computeWinner(state);
-            return {
-               ...state,
-               match: { ...state.match, ended: true, winner: winner },
-            };
-         }
-
-         // no change if card already uncovered
-         if (getCard(state, action.id).side === types.CARD_SIDE_FRONT) {
-            return state;
-         }
-
-         return {
-            ...state,
-            board: updateBoard(state, action),
-            match: updateMatch(state, action),
-         };
+         return makeMove(state, action);
       }
+      case types.MATCH_RESET:
+         return { ...INITIAL_STATE };
       case types.MATCH_START:
          return {
-            ...state,
+            ...INITIAL_STATE,
             board: { cards: action.cards },
             match: {
-               ...state.match,
-               round: 1,
-               active: Object.keys(state.match.players)[0],
+               ...INITIAL_STATE.match,
                started: true,
             },
          };
