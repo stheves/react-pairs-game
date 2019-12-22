@@ -24,6 +24,19 @@ const GameStats = ({ match }) => {
             <span className={'overlay-item-title'}>Round:</span>
             <span className={'overlay-item-stat'}>{match.round}</span>
          </div>
+         {Object.keys(match.players).length &&
+            Object.keys(match.players).map(playerId => {
+               return (
+                  <div className={'overlay-item'} key={playerId}>
+                     <span className={'overlay-item-title'}>
+                        Player {playerId}:
+                     </span>
+                     <span className={'overlay-item-stat'}>
+                        {match.players[playerId].hits.join(',')}
+                     </span>
+                  </div>
+               );
+            })}
       </div>
    );
 };

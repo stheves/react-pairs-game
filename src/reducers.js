@@ -8,15 +8,43 @@ const nextPlayerId = match => {
    return keys[nextIdx];
 };
 
-function countMoves(state, playerId) {
-   return state.match.moves.filter(m => m.player === playerId).length;
+function getMoves(state, playerId) {
+   return state.match.moves.filter(m => m.player === playerId);
+}
+
+function getMovesCount(state, playerId) {
+   return getMoves(state, playerId).length;
+}
+
+function computeHits(state, playerId, cardId) {
+   const moves = state.match.moves;
+   const lastMove = moves[moves.length - 1];
+   const lastCard = getCard(state, lastMove.card);
+   const currentCard = getCard(state, cardId);
+   if (lastCard.value === currentCard.value) {
+      // hit
+      const hits = [...state.match.players[playerId].hits];
+      hits.push([lastCard.id, currentCard.id]);
+      return hits;
+   }
+
+   // no change
+   return state.match.players[playerId].hits;
+}
+
+function getCard(state, id) {
+   return state.board.cards.find(c => c.id === id);
+}
+
+function getPlayersCount(state) {
+   return Object.keys(state.match.players).length;
 }
 
 const rootReducer = (state, action) => {
    switch (action.type) {
       case types.CARD_SWITCH_REQUEST: {
          const activePlayerId = state.match.activePlayer;
-         const isLastMove = countMoves(state, activePlayerId) % 2;
+         const isLastMove = getMovesCount(state, activePlayerId) % 2;
 
          const nextPlayer = isLastMove
             ? nextPlayerId(state.match)
@@ -25,9 +53,9 @@ const rootReducer = (state, action) => {
          const moves = [...state.match.moves];
          moves.push({ player: activePlayerId, card: action.id });
 
-         const round = Math.round(
-            moves.length / (Object.keys(state.match.players).length * 2),
-         );
+         const hits = computeHits(state, activePlayerId, action.id);
+
+         const round = Math.round(moves.length / (getPlayersCount(state) * 2));
 
          return {
             ...state,
@@ -53,6 +81,10 @@ const rootReducer = (state, action) => {
                moves: moves,
                players: {
                   ...state.match.players,
+                  [activePlayerId]: {
+                     ...state.match.players[activePlayerId],
+                     hits: hits,
+                  },
                },
             },
          };
