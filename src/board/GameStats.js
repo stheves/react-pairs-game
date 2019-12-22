@@ -9,7 +9,7 @@ const GameStats = ({ match }) => {
          </div>
          <div className={'game-stats-item'}>
             <span className={'game-stats-item-stat'}>
-               {match.started ? 'Yes' : 'No'}
+               {match.started ? match.started.toLocaleTimeString() : 'No'}
             </span>
          </div>
          <div className={'game-stats-item'}>
@@ -17,7 +17,7 @@ const GameStats = ({ match }) => {
          </div>
          <div className={'game-stats-item'}>
             <span className={'game-stats-item-stat'}>
-               {match.ended ? 'Yes' : 'No'}
+               {match.ended ? match.ended.toLocaleTimeString() : 'No'}
             </span>
          </div>
          <div className={'game-stats-item'}>
@@ -43,18 +43,18 @@ const GameStats = ({ match }) => {
          {Object.keys(match.players).length &&
             Object.keys(match.players).map(playerId => {
                return (
-                  <>
-                     <div className={'game-stats-item'} key={playerId}>
+                  <div key={playerId}>
+                     <div className={'game-stats-item'}>
                         <span className={'game-stats-item-title'}>
                            Player {playerId} Hits:
                         </span>
                      </div>
-                     <div className={'game-stats-item'} key={playerId}>
+                     <div className={'game-stats-item'}>
                         <span className={'game-stats-item-stat'}>
                            {match.players[playerId].hits.length}
                         </span>
                      </div>
-                  </>
+                  </div>
                );
             })}
       </div>

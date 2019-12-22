@@ -6,8 +6,8 @@ export const INITIAL_STATE = {
       cards: [],
    },
    match: {
-      started: false,
-      ended: false,
+      started: null,
+      ended: null,
       round: 1,
       winner: null,
       activePlayer: 'One',

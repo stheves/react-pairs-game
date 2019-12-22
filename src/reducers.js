@@ -118,7 +118,7 @@ function makeMove(state, action) {
       let winner = computeWinner(state);
       return {
          ...state,
-         match: { ...state.match, ended: true, winner: winner },
+         match: { ...state.match, ended: new Date(), winner: winner },
       };
    }
 
@@ -147,7 +147,7 @@ const rootReducer = (state, action) => {
             board: { cards: action.cards },
             match: {
                ...INITIAL_STATE.match,
-               started: true,
+               started: new Date(),
             },
          };
       default:
