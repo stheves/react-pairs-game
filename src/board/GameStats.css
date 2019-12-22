@@ -1,16 +1,20 @@
-.overlay {
-   display: grid;
-   grid-template-columns: auto auto auto auto;
-   background-color: var(--color-grey-dark-50);
+.game-stats {
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto auto auto;
+    grid-gap: var(--padding);
+    justify-content: space-between;
+    padding: var(--padding);
+    padding-top: calc(var(--padding) / 2);
+    padding-bottom: calc(var(--padding) / 2);
+    background-color: var(--color-grey-dark-50);
 }
-.overlay-item {
-   padding: var(--margin);
-   padding-top: calc(var(--margin) / 2);
-   padding-bottom: calc(var(--margin) / 2);
+.game-stats > .game-stats-item {
+
 }
-.overlay-item-title {
-   margin-right: var(--margin);
+.game-stats span.game-stats-item-title {
+    text-decoration: underline;
 }
 
-.overlay-item-stat {
+.game-stats span.game-stats-item-stat {
+    color: var(--color-grey-light);
 }

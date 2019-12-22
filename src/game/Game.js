@@ -10,11 +10,11 @@ export const INITIAL_STATE = {
       ended: false,
       round: 1,
       winner: null,
-      activePlayer: 'one',
+      activePlayer: 'One',
       moves: [],
       players: {
-         one: { hits: [] },
-         two: { hits: [] },
+         One: { hits: [] },
+         Two: { hits: [] },
       },
    },
 };

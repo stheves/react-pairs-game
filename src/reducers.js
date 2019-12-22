@@ -91,7 +91,7 @@ function updateMatch(state, action) {
 }
 
 function isGameOver(state) {
-   return state.match.moves.length === state.board.cards.length;
+   return state.board.cards.filter(c => c.side === CARD_SIDE_BACK).length === 0;
 }
 
 function computeWinner(state) {
