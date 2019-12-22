@@ -2,7 +2,7 @@ import types from './types';
 import { CARD_SIDE_BACK } from './board/CardComponent';
 
 // card actions
-const switchCard = cardId => {
+const makeMove = cardId => {
    return { type: types.MAKE_MOVE, id: cardId };
 };
 
@@ -24,8 +24,18 @@ const resetMatch = () => {
    return { type: types.MATCH_RESET };
 };
 
+const chooseCard = cardId => {
+   return { type: types.CHOOSE_CARD, id: cardId };
+};
+
+const switchCard = cardId => {
+   return { type: types.SWITCH_CARD, id: cardId };
+};
+
 export default {
    switchCard,
+   chooseCard,
+   makeMove,
    startMatch,
    resetMatch,
 };

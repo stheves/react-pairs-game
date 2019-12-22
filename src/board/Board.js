@@ -10,8 +10,8 @@ import GameStats from './GameStats';
 const Board = () => {
    const [game, dispatch] = useGame();
 
-   const handleSwitchCard = cardId => {
-      dispatch(actions.switchCard(cardId));
+   const handleClickCard = cardId => {
+      dispatch(actions.makeMove(cardId));
    };
 
    const onClickStartGame = () => {
@@ -22,15 +22,15 @@ const Board = () => {
       <CardComponent
          key={i}
          card={card}
-         onCardClick={() => handleSwitchCard(card.id)}
+         onCardClick={() => handleClickCard(card.id)}
       />
    ));
 
    return (
       <BoardComponent match={game.match}>
          <Menu onStartClick={onClickStartGame} />
-          <GameStats match={game.match} />
-          <Layout>{Cards}</Layout>
+         <GameStats match={game.match} />
+         <Layout>{Cards}</Layout>
       </BoardComponent>
    );
 };

@@ -103,7 +103,7 @@ function computeWinner(state) {
          max = hitsCount;
          winner = k;
       } else if (hitsCount === max) {
-          winner = 'Draw';
+         winner = 'Draw';
       }
    });
    return winner;
@@ -136,22 +136,46 @@ function makeMove(state, action) {
    };
 }
 
+function chooseCard(state, action) {
+   // no change if card already uncovered
+   if (getCard(state, action.id).side === CARD_SIDE_FRONT) {
+      return state;
+   }
+   return { ...state, board: updateBoard(state, action) };
+}
+
+function startMatch(action) {
+   return {
+      ...INITIAL_STATE,
+      board: { cards: action.cards },
+      match: {
+         ...INITIAL_STATE.match,
+         started: new Date(),
+      },
+   };
+}
+
+function resetMatch() {
+   return { ...INITIAL_STATE };
+}
+
+function switchCard(state, action) {
+   return { ...state, board: updateBoard(state, action) };
+}
+
 const rootReducer = (state, action) => {
    switch (action.type) {
+      case types.CHOOSE_CARD:
+         return chooseCard(state, action);
+      case types.SWITCH_CARD:
+         return switchCard(state, action);
       case types.MAKE_MOVE: {
          return makeMove(state, action);
       }
       case types.MATCH_RESET:
-         return { ...INITIAL_STATE };
+         return resetMatch();
       case types.MATCH_START:
-         return {
-            ...INITIAL_STATE,
-            board: { cards: action.cards },
-            match: {
-               ...INITIAL_STATE.match,
-               started: new Date(),
-            },
-         };
+         return startMatch(action);
       default:
          return state;
    }
