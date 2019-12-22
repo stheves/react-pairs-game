@@ -43,6 +43,10 @@ function getPlayersCount(state) {
 const rootReducer = (state, action) => {
    switch (action.type) {
       case types.CARD_SWITCH_REQUEST: {
+         if (getCard(state, action.id).side === types.CARD_SIDE_FRONT) {
+            // no change if card already open
+            return state;
+         }
          const activePlayerId = state.match.activePlayer;
          const isLastMove = getMovesCount(state, activePlayerId) % 2;
 
