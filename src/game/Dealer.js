@@ -3,7 +3,6 @@ import actions from '../actions';
 import Board from '../board/Board';
 import { useGame } from './Game';
 import GameStats from './GameStats';
-import { CARD_SIDE_BACK } from '../board/CardComponent';
 
 function shuffle(a) {
    for (let i = a.length - 1; i > 0; i--) {
@@ -29,7 +28,12 @@ function computeWinner(state) {
 }
 
 function isGameOver(state) {
-   return state.board.cards.filter(c => c.side === CARD_SIDE_BACK).length === 0;
+   let count = 0;
+   const players = state.match.players;
+   Object.keys(players).forEach(k => {
+      count = count + players[k].hits.length;
+   });
+   return count + 1 === state.board.cards.length / 2;
 }
 
 function useShuffle(game, dispatch) {
@@ -69,9 +73,9 @@ const Dealer = () => {
       function moveCards() {
          const nextPlayer = nextPlayerId(game.match);
          const move = createMove(game.match, selectedCards);
-         const countMoves = game.match.moves.length;
-         const countPlayers = Object.keys(game.match.players).length;
-         const nextRound = Math.floor((countMoves + 1) / countPlayers) + 1;
+         const movesCount = game.match.moves.length;
+         const playersCount = Object.keys(game.match.players).length;
+         const nextRound = Math.floor((movesCount + 1) / playersCount) + 1;
          const firstCard = getCard(game.board.cards, selectedCards[0]);
          const secondCard = getCard(game.board.cards, selectedCards[1]);
          const hasHit = Object.is(firstCard.value, secondCard.value);
@@ -82,20 +86,15 @@ const Dealer = () => {
 
       if (selectedCards.length === 2) {
          const handle = setTimeout(() => {
-            const todo = [];
             const mv = moveCards();
-            todo.push(mv);
+            dispatch(mv);
+
+            if (!mv.hit) dispatch(actions.switchCard(selectedCards));
 
             const gameOver = isGameOver(game);
             if (gameOver) {
-               todo.push(actions.endGame(computeWinner(game), new Date()));
+               dispatch(actions.endMatch(computeWinner(game), new Date()));
             }
-
-            if (!mv.hit)
-               selectedCards.forEach(id => todo.push(actions.switchCard(id)));
-
-            // execute all
-            todo.forEach(t => dispatch(t));
 
             // reset state
             setSelectedCards([]);
@@ -109,7 +108,7 @@ const Dealer = () => {
          return;
       }
       setSelectedCards([...selectedCards, cardId]);
-      dispatch(actions.switchCard(cardId));
+      dispatch(actions.switchCard([cardId]));
    }
 
    if (!game.match.started) {

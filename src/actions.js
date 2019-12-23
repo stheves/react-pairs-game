@@ -1,7 +1,6 @@
 import types from './types';
 import { CARD_SIDE_BACK } from './board/CardComponent';
 
-// card actions
 const makeMove = (move, nextPlayer, nextRound, hit) => {
    return {
       type: types.MAKE_MOVE,
@@ -25,12 +24,12 @@ const startMatch = (cards = generateCards()) => {
    return { type: types.MATCH_START, cards: cards };
 };
 
-const endGame = (winner, endedAt) => {
+const endMatch = (winner, endedAt) => {
    return { type: types.MATCH_END, winner: winner, endedAt: endedAt };
 };
 
-const switchCard = cardId => {
-   return { type: types.SWITCH_CARD, id: cardId };
+const switchCard = (cardIds=[]) => {
+   return { type: types.SWITCH_CARD, ids: cardIds };
 };
 
 const resetGame = initState => {
@@ -43,5 +42,5 @@ export default {
    makeMove,
    startMatch,
    resetGame,
-   endGame,
+   endMatch,
 };

@@ -4,7 +4,7 @@ import { CARD_SIDE_BACK, CARD_SIDE_FRONT } from './board/CardComponent';
 function updateBoard(state, action) {
    return {
       cards: state.board.cards.map(card => {
-         if (card.id === action.id) {
+         if (action.ids.includes(card.id)) {
             const side =
                card.side === CARD_SIDE_FRONT ? CARD_SIDE_BACK : CARD_SIDE_FRONT;
             return { ...card, side: side };
