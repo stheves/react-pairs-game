@@ -3,8 +3,8 @@ import Layout from './Layout';
 import CardComponent from './CardComponent';
 import PropTypes from 'prop-types';
 
-const Board = ({ onClickCard, game }) => {
-   const Cards = game.board.cards.map((card, i) => (
+const Board = ({ onClickCard, board }) => {
+   const Cards = board.cards.map((card, i) => (
       <CardComponent
          key={i}
          card={card}
@@ -17,13 +17,13 @@ const Board = ({ onClickCard, game }) => {
 
 Board.propTypes = {
    onClickCard: PropTypes.func,
-   game: PropTypes.object,
+   board: PropTypes.object,
 };
 
 // noinspection JSUnusedGlobalSymbols
 Board.defaultProps = {
    onClickCard: () => {},
-   game: {},
+   board: { cards: [] },
 };
 
 export default Board;

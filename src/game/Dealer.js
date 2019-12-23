@@ -118,7 +118,7 @@ const Dealer = () => {
    return (
       <React.Fragment>
          <GameStats match={game.match} />
-         <Board onClickCard={handleClickCard} game={game} />
+         <Board onClickCard={handleClickCard} board={game.board} />
       </React.Fragment>
    );
 };
