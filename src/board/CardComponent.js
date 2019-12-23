@@ -7,8 +7,9 @@ export const CARD_SIDE_FRONT = 'CARD_SIDE_FRONT';
 
 const CardComponent = ({ card, onCardClick }) => {
    const value = card.side === CARD_SIDE_FRONT ? card.value : '?';
+    const style = card.side === CARD_SIDE_FRONT ? 'front' : 'back';
    return (
-      <div className={'game-card'} onClick={onCardClick}>
+      <div className={'game-card ' + style} onClick={onCardClick}>
          <span className={`game-card-value`}>{value}</span>
       </div>
    );

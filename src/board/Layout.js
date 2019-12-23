@@ -6,10 +6,10 @@ const Layout = ({ children = [] }) => {
    return (
       <div className={'game-board-wrapper'}>
          <div className={'game-board'}>
-            {children.map((Child, i) => {
+            {children.map((item, i) => {
                return (
                   <div className={'game-board-item'} key={i}>
-                     {Child}
+                     {item}
                   </div>
                );
             })}

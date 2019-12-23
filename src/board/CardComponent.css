@@ -1,23 +1,25 @@
 .game-card {
-   min-width: 1.25em;
-   width: 100%;
-   height: 100%;
-   font-size: 4.5em;
    text-align: center;
-   background-color: var(--color-grey-dark-25);
+   color: var(--color-grey-light-75);
+   background-color: var(--color-grey-dark-50);
+   cursor: pointer;
+   min-width: 1.5em;
    line-height: 2em;
-   user-select: none;
-    border: 1px solid blue;
+   font-size: 4.5em;
+   border: var(--border);
+   border-color: var(--color-grey-light);
 }
 .game-card:hover {
-   cursor: pointer;
-   background-color: var(--color-grey-dark-50);
+   color: var(--color-white);
+   border-color: var(--color-white);
 }
 .game-card-value {
+   user-select: none;
 }
-.active {
+.game-card.front {
+   background-color: var(--color-grey-light-25);
+   color: var(--color-white);
 }
-.game-card-front {
-}
-.game-card-back {
+.game-card.back {
+   background-color: var(--color-grey-dark-75);
 }

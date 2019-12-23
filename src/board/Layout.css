@@ -1,20 +1,15 @@
 .game-board-wrapper {
-   width: 100%;
-   height: 100%;
    overflow: hidden;
 }
-.game-board {
+.game-board-wrapper > .game-board {
    display: grid;
    grid-template-columns: auto auto auto auto auto;
    grid-gap: var(--padding) var(--padding);
    padding: var(--padding);
-   height: 100%;
    background-color: var(--color-grey-dark-75);
 }
 
-.game-board-item {
-   border: var(--border);
+.game-board .game-board-item {
+   border: var(--border-sm);
    background-color: var(--color-grey-dark-25);
-   width: 100%;
-   height: 100%;
 }
