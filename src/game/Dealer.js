@@ -115,9 +115,14 @@ const Dealer = () => {
       return null;
    }
 
+   const style =
+      Object.keys(game.match.players).indexOf(game.match.activePlayer) % 2 === 0
+         ? 'red'
+         : 'blue';
+
    return (
       <React.Fragment>
-         <GameStats match={game.match} />
+         <GameStats match={game.match} activeStyle={style} />
          <Board onClickCard={handleClickCard} board={game.board} />
       </React.Fragment>
    );

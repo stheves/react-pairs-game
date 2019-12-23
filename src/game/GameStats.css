@@ -7,18 +7,21 @@
    padding-top: calc(var(--padding) / 2);
    padding-bottom: calc(var(--padding) / 2);
    background-color: var(--color-grey-light-75);
+}
+.game-stats > .game-stats-item {
+   padding: var(--padding-sm);
+}
+.game-stats-item span.game-stats-item-title {
    color: var(--color-primary);
-}
-.game-stats .blue {
-   background-color: darkblue;
-}
-.game-stats .red {
-   background-color: darkred;
-}
-.game-stats span.game-stats-item-title {
    text-decoration: underline;
 }
+.game-stats-item span.game-stats-item-stat {
+   color: var(--color-white);
+}
 
-.game-stats span.game-stats-item-stat {
-   color: var(--color-grey-light);
+.game-stats > .game-stats-item.blue {
+   background-color: darkblue;
+}
+.game-stats > .game-stats-item.red {
+   background-color: darkred;
 }
