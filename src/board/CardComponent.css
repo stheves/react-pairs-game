@@ -7,6 +7,7 @@
    background-color: var(--color-grey-dark-25);
    line-height: 2em;
    user-select: none;
+    border: 1px solid blue;
 }
 .game-card:hover {
    cursor: pointer;

@@ -1,7 +1,6 @@
 import React from 'react';
 import Layout from './Layout';
 import CardComponent from './CardComponent';
-import BoardComponent from './BoardComponent';
 import PropTypes from 'prop-types';
 
 const Board = ({ onClickCard, game }) => {
@@ -13,11 +12,7 @@ const Board = ({ onClickCard, game }) => {
       />
    ));
 
-   return (
-      <BoardComponent>
-         <Layout>{Cards}</Layout>
-      </BoardComponent>
-   );
+   return <Layout>{Cards}</Layout>;
 };
 
 Board.propTypes = {

@@ -19,6 +19,7 @@ CardComponent.propTypes = {
    onCardClick: PropTypes.func,
 };
 
+// noinspection JSUnusedGlobalSymbols
 CardComponent.defaultProps = {
    card: {},
    onCardClick: () => {},
