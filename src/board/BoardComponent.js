@@ -7,7 +7,7 @@ const BoardComponent = ({ children }) => {
 };
 
 BoardComponent.propTypes = {
-   children: PropTypes.array,
+   children: PropTypes.node.isRequired,
 };
 
 export default BoardComponent;
