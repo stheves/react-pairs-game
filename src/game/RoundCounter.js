@@ -4,17 +4,17 @@ import './RoundCounter.css';
 
 const RoundCounter = ({ round, activePlayer, bgClass }) => {
    return (
-      <div className={`round-counter ${bgClass}`}>
-          <div className={'round-stat'}>Round: {round}</div>
-         <div className={'round-stat'}>Player: {activePlayer}</div>
+      <div className={`round-counter padding ${bgClass}`}>
+         <h1 className={'round-stat no-margin'}>Round {round}</h1>
+         <p className={'no-margin'}>Player {activePlayer}</p>
       </div>
    );
 };
 
 RoundCounter.propTypes = {
-   round: PropTypes.object.isRequired,
-   activePlayer: PropTypes.object.isRequired,
-   bgClass: PropTypes.object.isRequired,
+   round: PropTypes.number.isRequired,
+   activePlayer: PropTypes.string.isRequired,
+   bgClass: PropTypes.string.isRequired,
 };
 
 export default RoundCounter;

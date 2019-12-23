@@ -1,9 +1,16 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-const useTimer = (handler, timeout = 1000) => {
+const useTimer = (startDate = new Date(), timeout = 1000) => {
+   const [time, setTime] = useState(startDate);
    useEffect(() => {
-      const handle = setTimeout(handler, timeout);
-      return () => clearTimeout(handle);
-   }, [handler, timeout]);
+      function handler() {
+         setTime(new Date());
+      }
+
+      const handle = setInterval(handler, timeout);
+      return () => clearInterval(handle);
+   }, [time, timeout]);
+
+   return { time };
 };
 export default useTimer;

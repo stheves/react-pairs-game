@@ -1,12 +1,9 @@
 /*noinspection CssUnknownTarget*/
-@import url('https://fonts.googleapis.com/css?family=Rokkitt&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Bowlby+One+SC&display=swap');
 
 .round-counter {
-   background-color: var(--color-grey-dark-75);
-   display: flex;
-   justify-content: space-around;
-   padding: var(--padding);
-   font-family: 'Rokkitt', serif;
+   font-family: 'Bowlby One SC', cursive;
+   text-align: center;
 }
 
 .round-counter.red {
@@ -19,6 +16,6 @@
 
 .round-stat {
    font-size: 2.5em;
-   font-style: oblique;
-    text-transform: uppercase;
+   font-style: italic;
+   text-transform: uppercase;
 }

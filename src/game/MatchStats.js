@@ -1,8 +1,10 @@
 import React from 'react';
 import './MatchStats.css';
 import PropTypes from 'prop-types';
+import useTimer from '../utils/useTimer';
 
 const MatchStats = ({ match }) => {
+   const startedTimer = useTimer(match.started);
    return (
       <div className={'game-stats'}>
          <div className={'game-stats-item'}>
@@ -10,7 +12,7 @@ const MatchStats = ({ match }) => {
          </div>
          <div className={'game-stats-item'}>
             <span className={'game-stats-item-stat'}>
-               {match.started ? match.started.toLocaleTimeString() : 'No'}
+               {match.started ? startedTimer.time.toLocaleTimeString() : 'No'}
             </span>
          </div>
          <div className={'game-stats-item'}>
