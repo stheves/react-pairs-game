@@ -54,7 +54,7 @@ const nextPlayerId = match => {
    return keys[nextIdx];
 };
 
-function addMove(match, cardIds) {
+function createMove(match, cardIds) {
    const activePlayerId = match.activePlayer;
    return { player: activePlayerId, cards: cardIds };
 }
@@ -66,29 +66,38 @@ const Dealer = () => {
    useShuffle(game, dispatch);
 
    useEffect(() => {
+      function moveCards() {
+         const nextPlayer = nextPlayerId(game.match);
+         const move = createMove(game.match, selectedCards);
+         const countMoves = game.match.moves.length;
+         const countPlayers = Object.keys(game.match.players).length;
+         const nextRound = Math.floor((countMoves + 1) / countPlayers) + 1;
+         const firstCard = getCard(game.board.cards, selectedCards[0]);
+         const secondCard = getCard(game.board.cards, selectedCards[1]);
+         const hasHit = Object.is(firstCard.value, secondCard.value);
+         const hit = hasHit ? [...selectedCards] : null;
+
+         return actions.makeMove(move, nextPlayer, nextRound, hit);
+      }
+
       if (selectedCards.length === 2) {
          const handle = setTimeout(() => {
-            // TODO split this up in multiple useEffect hooks
-            // end game
+            const todo = [];
+            const mv = moveCards();
+            todo.push(mv);
+
             const gameOver = isGameOver(game);
             if (gameOver) {
-               dispatch(actions.endGame(computeWinner(game), new Date()));
-               setSelectedCards([]);
-               return;
+               todo.push(actions.endGame(computeWinner(game), new Date()));
             }
 
-            // make move
-            const nextPlayer = nextPlayerId(game.match);
-            const move = addMove(game.match, selectedCards);
-            const nextRound = game.match.round + 1;
-            const isHit =
-               getCard(game.board.cards, selectedCards[0]).value ===
-               getCard(game.board.cards, selectedCards[1]).value;
-            const hit = isHit ? [...selectedCards] : null;
-            dispatch(actions.makeMove(move, nextPlayer, nextRound, hit));
-            !isHit &&
-               selectedCards.forEach(id => dispatch(actions.switchCard(id)));
+            if (!mv.hit)
+               selectedCards.forEach(id => todo.push(actions.switchCard(id)));
 
+            // execute all
+            todo.forEach(t => dispatch(t));
+
+            // reset state
             setSelectedCards([]);
          }, game.switchCardTimeout);
          return () => clearTimeout(handle);
@@ -96,7 +105,7 @@ const Dealer = () => {
    }, [game, selectedCards, dispatch]);
 
    function handleClickCard(cardId) {
-      if (selectedCards.length >= 2) {
+      if (game.ended || selectedCards.length >= 2) {
          return;
       }
       setSelectedCards([...selectedCards, cardId]);

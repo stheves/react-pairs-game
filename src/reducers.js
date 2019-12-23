@@ -52,7 +52,7 @@ const rootReducer = (state, action) => {
             ...state,
             match: {
                ...state.match,
-               moves: [state.match.moves, action.move],
+               moves: [...state.match.moves, action.move],
                activePlayer: action.nextPlayer,
                round: action.nextRound,
                players: updateHit(state, action),
