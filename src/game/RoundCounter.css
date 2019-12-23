@@ -1,0 +1,24 @@
+/*noinspection CssUnknownTarget*/
+@import url('https://fonts.googleapis.com/css?family=Rokkitt&display=swap');
+
+.round-counter {
+   background-color: var(--color-grey-dark-75);
+   display: flex;
+   justify-content: space-around;
+   padding: var(--padding);
+   font-family: 'Rokkitt', serif;
+}
+
+.round-counter.red {
+   background-color: var(--color-red);
+}
+
+.round-counter.blue {
+   background-color: var(--color-blue);
+}
+
+.round-stat {
+   font-size: 2.5em;
+   font-style: oblique;
+    text-transform: uppercase;
+}

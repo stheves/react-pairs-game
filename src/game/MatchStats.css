@@ -1,15 +1,14 @@
 .game-stats {
    display: grid;
-   grid-template-columns: auto auto auto auto auto auto auto auto;
-   grid-gap: calc(var(--padding) / 2);
-   justify-content: space-between;
+   grid-template-columns: repeat(3, 2fr 1fr);
+   background-color: var(--color-grey-light-75);
    padding: var(--padding);
    padding-top: calc(var(--padding) / 2);
    padding-bottom: calc(var(--padding) / 2);
-   background-color: var(--color-grey-light-75);
 }
 .game-stats > .game-stats-item {
    padding: var(--padding-sm);
+   padding-left: 0;
 }
 .game-stats-item span.game-stats-item-title {
    color: var(--color-primary);
@@ -20,8 +19,8 @@
 }
 
 .game-stats > .game-stats-item.blue {
-   background-color: darkblue;
+   background-color: var(--color-blue);
 }
 .game-stats > .game-stats-item.red {
-   background-color: darkred;
+   background-color: var(--color-red);
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import './MatchStats.css';
 import PropTypes from 'prop-types';
 
-const MatchStats = ({ match, activeStyle }) => {
+const MatchStats = ({ match }) => {
    return (
       <div className={'game-stats'}>
          <div className={'game-stats-item'}>
@@ -20,20 +20,6 @@ const MatchStats = ({ match, activeStyle }) => {
             <span className={'game-stats-item-stat'}>
                {match.ended ? match.ended.toLocaleTimeString() : 'No'}
             </span>
-         </div>
-         <div className={'game-stats-item'}>
-            <span className={'game-stats-item-title'}>Active Player:</span>
-         </div>
-         <div className={'game-stats-item ' + activeStyle}>
-            <span className={'game-stats-item-stat'}>
-               {match.activePlayer}
-            </span>
-         </div>
-         <div className={'game-stats-item'}>
-            <span className={'game-stats-item-title'}>Round:</span>
-         </div>
-         <div className={'game-stats-item'}>
-            <span className={'game-stats-item-stat'}>{match.round}</span>
          </div>
          {Object.keys(match.players).length &&
             Object.keys(match.players).map(playerId => {
@@ -66,12 +52,10 @@ const MatchStats = ({ match, activeStyle }) => {
 
 MatchStats.propTypes = {
    match: PropTypes.object,
-   activeStyle: PropTypes.object,
 };
 
 MatchStats.defaultProps = {
    match: { players: {} },
-   activeStyle: undefined,
 };
 
 export default MatchStats;

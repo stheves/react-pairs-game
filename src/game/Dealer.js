@@ -3,6 +3,7 @@ import actions from '../actions';
 import Board from '../board/Board';
 import { useGame } from './Game';
 import MatchStats from './MatchStats';
+import RoundCounter from './RoundCounter';
 
 function shuffle(a) {
    for (let i = a.length - 1; i > 0; i--) {
@@ -122,7 +123,12 @@ const Dealer = () => {
 
    return (
       <React.Fragment>
-         <MatchStats match={game.match} activeStyle={style} />
+         <MatchStats match={game.match} />
+         <RoundCounter
+            round={game.match.round}
+            activePlayer={game.match.activePlayer}
+            bgClass={style}
+         />
          <Board onClickCard={handleClickCard} board={game.board} />
       </React.Fragment>
    );

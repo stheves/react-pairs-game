@@ -13,11 +13,14 @@
    --color-grey-dark-50: rgba(10, 10, 10, 0.5);
    --color-grey-dark-75: rgba(10, 10, 10, 0.75);
    --color-primary: #1c8a3a;
+   --color-blue: darkblue;
+   --color-red: darkred;
 
    --main-width: 550px;
    --main-height: 100%;
    --padding: 15px;
    --padding-sm: 5px;
+   --padding-lg: 25px;
    --margin: 15px;
 
    --link-color: var(--color-primary);
