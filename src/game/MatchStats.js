@@ -1,8 +1,8 @@
 import React from 'react';
-import './GameStats.css';
+import './MatchStats.css';
 import PropTypes from 'prop-types';
 
-const GameStats = ({ match, activeStyle }) => {
+const MatchStats = ({ match, activeStyle }) => {
    return (
       <div className={'game-stats'}>
          <div className={'game-stats-item'}>
@@ -64,14 +64,14 @@ const GameStats = ({ match, activeStyle }) => {
    );
 };
 
-GameStats.propTypes = {
+MatchStats.propTypes = {
    match: PropTypes.object,
    activeStyle: PropTypes.object,
 };
 
-GameStats.defaultProps = {
+MatchStats.defaultProps = {
    match: { players: {} },
    activeStyle: undefined,
 };
 
-export default GameStats;
+export default MatchStats;

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import actions from '../actions';
 import Board from '../board/Board';
 import { useGame } from './Game';
-import GameStats from './GameStats';
+import MatchStats from './MatchStats';
 
 function shuffle(a) {
    for (let i = a.length - 1; i > 0; i--) {
@@ -122,7 +122,7 @@ const Dealer = () => {
 
    return (
       <React.Fragment>
-         <GameStats match={game.match} activeStyle={style} />
+         <MatchStats match={game.match} activeStyle={style} />
          <Board onClickCard={handleClickCard} board={game.board} />
       </React.Fragment>
    );
