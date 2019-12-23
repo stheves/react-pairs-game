@@ -6,9 +6,14 @@
    padding: var(--padding);
    padding-top: calc(var(--padding) / 2);
    padding-bottom: calc(var(--padding) / 2);
-   background-color: var(--color-grey-dark-50);
+   background-color: var(--color-grey-light-75);
+   color: var(--color-primary);
 }
-.game-stats > .game-stats-item {
+.game-stats .blue {
+   background-color: darkblue;
+}
+.game-stats .red {
+   background-color: darkred;
 }
 .game-stats span.game-stats-item-title {
    text-decoration: underline;
