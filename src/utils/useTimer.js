@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 
 const useTimer = (startDate = new Date()) => {
+   const NO_HANDLE = -1;
    const [time, setTime] = useState(startDate);
-   const handle = useRef(0);
+   const handle = useRef(NO_HANDLE);
 
    useEffect(() => {
       handle.current = setTimeout(tick, 1000);
@@ -14,7 +15,7 @@ const useTimer = (startDate = new Date()) => {
    }
 
    function cancel() {
-      if (handle.current) {
+      if (handle.current !== NO_HANDLE) {
          clearTimeout(handle.current);
       }
    }
