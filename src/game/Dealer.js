@@ -3,7 +3,7 @@ import actions from '../actions';
 import Board from '../board/Board';
 import { useGame } from './Game';
 import MatchStats from './MatchStats';
-import RoundCounter from './RoundCounter';
+import ShoutBox from './ShoutBox';
 
 function shuffle(a) {
    for (let i = a.length - 1; i > 0; i--) {
@@ -110,6 +110,12 @@ const Dealer = () => {
       }
    }, [game, dispatch]);
 
+   function getStyleForPlayer(playerId) {
+      return Object.keys(game.match.players).indexOf(playerId) === 0
+         ? 'red'
+         : 'blue';
+   }
+
    function handleClickCard(cardId) {
       if (game.ended || selectedCards.length >= 2) {
          return;
@@ -122,19 +128,19 @@ const Dealer = () => {
       return null;
    }
 
-   const style =
-      Object.keys(game.match.players).indexOf(game.match.activePlayer) % 2 === 0
-         ? 'red'
-         : 'blue';
+   let style = getStyleForPlayer(game.match.activePlayer);
 
+   let shoutTitle = 'Round ' + game.match.round;
+   let shoutMsg = 'Player ' + game.match.activePlayer;
+   if (game.match.winner) {
+      shoutTitle = 'Game Over';
+      shoutMsg = 'Winner ' + game.match.winner;
+      style = getStyleForPlayer(game.match.winner);
+   }
    return (
       <React.Fragment>
          <MatchStats match={game.match} />
-         <RoundCounter
-            round={game.match.round}
-            activePlayer={game.match.activePlayer}
-            bgClass={style}
-         />
+         <ShoutBox title={shoutTitle} msg={shoutMsg} bgClass={style} />
          <Board onClickCard={handleClickCard} board={game.board} />
       </React.Fragment>
    );
