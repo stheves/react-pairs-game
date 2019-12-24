@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './MatchStats.css';
 import PropTypes from 'prop-types';
 import useTimer from '../utils/useTimer';
 
 const MatchStats = ({ match }) => {
-   const startedTimer = useTimer(match.started);
+   const timer = useTimer(match.started);
+
+   // cancel timer when game is over
+   useEffect(() => {
+      if (match.ended) {
+         timer.cancel();
+      }
+   }, [timer, match]);
+
    return (
       <div className={'game-stats'}>
          <div className={'game-stats-item'}>
@@ -12,7 +20,7 @@ const MatchStats = ({ match }) => {
          </div>
          <div className={'game-stats-item'}>
             <span className={'game-stats-item-stat'}>
-               {match.started ? startedTimer.time.toLocaleTimeString() : 'No'}
+               {match.started ? timer.time.toLocaleTimeString() : 'No'}
             </span>
          </div>
          <div className={'game-stats-item'}>
