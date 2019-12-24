@@ -29,3 +29,28 @@ ul > li a.game-nav-link:hover {
    background-color: var(--link-color);
    color: white;
 }
+
+ul > li.dropdown .dropdown-menu {
+    position: absolute;
+    vertical-align: bottom;
+    background-color: var(--color-white);
+    display: none;
+}
+
+ul > li.dropdown .dropdown-menu.visible {
+    display: block;
+}
+
+ul > li.dropdown .dropdown-menu a.dropdown-item {
+    display: block;
+    background-color: var(--color-grey-dark-75);
+    padding: var(--padding-sm);
+    padding-left: var(--padding-lg);
+    padding-right: var(--padding-lg);
+    color: var(--color-white);
+}
+
+ul > li.dropdown .dropdown-menu a.dropdown-item:hover {
+    background-color: var(--color-grey-light-50);
+    color: var(--color-white);
+}
