@@ -8,10 +8,8 @@ const MatchStats = ({ match }) => {
 
    // cancel timer when game is over
    useEffect(() => {
-      if (match.ended) {
-         timer.cancel();
-      }
-   }, [timer, match]);
+      timer.cancel();
+   }, [timer, match.ended]);
 
    return (
       <div className={'game-stats'}>

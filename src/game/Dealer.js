@@ -101,7 +101,7 @@ const Dealer = () => {
 
    // check if game is over
    useEffect(() => {
-      if (game.ended) {
+      if (game.match.ended) {
          return;
       }
       const gameOver = isGameOver(game);
@@ -117,7 +117,7 @@ const Dealer = () => {
    }
 
    function handleClickCard(cardId) {
-      if (game.ended || selectedCards.length >= 2) {
+      if (game.match.ended || selectedCards.length >= 2) {
          return;
       }
       setSelectedCards([...selectedCards, cardId]);

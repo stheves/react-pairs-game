@@ -12,7 +12,7 @@ const ShoutBox = ({ title, msg, bgClass }) => {
 };
 
 ShoutBox.propTypes = {
-   title: PropTypes.number.isRequired,
+   title: PropTypes.string.isRequired,
    msg: PropTypes.string.isRequired,
    bgClass: PropTypes.string.isRequired,
 };
