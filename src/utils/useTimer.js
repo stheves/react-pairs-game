@@ -7,7 +7,7 @@ const useTimer = (startDate = new Date(), timeout = 1000) => {
          setTime(new Date());
       }
 
-      const handle = setInterval(handler, timeout);
+      const handle = setTimeout(handler, timeout);
       return () => clearInterval(handle);
    }, [time, timeout]);
 
