@@ -20,7 +20,7 @@ const MatchStats = ({ match }) => {
          </div>
          <div className={'game-stats-item'}>
             <span className={'game-stats-item-stat'}>
-               {match.started ? timer.time.toLocaleTimeString() : 'No'}
+               {match.started ? timer.time.toLocaleTimeString() : 'Not yet'}
             </span>
          </div>
          <div className={'game-stats-item'}>
@@ -28,7 +28,15 @@ const MatchStats = ({ match }) => {
          </div>
          <div className={'game-stats-item'}>
             <span className={'game-stats-item-stat'}>
-               {match.ended ? match.ended.toLocaleTimeString() : 'No'}
+               {match.ended ? match.ended.toLocaleTimeString() : 'Not yet'}
+            </span>
+         </div>
+         <div className={'game-stats-item'}>
+            <span className={'game-stats-item-title'}>Winner:</span>
+         </div>
+         <div className={'game-stats-item'}>
+            <span className={'game-stats-item-stat'}>
+               {match.winner ? match.winner : 'None'}
             </span>
          </div>
          {Object.keys(match.players).length &&
@@ -49,12 +57,10 @@ const MatchStats = ({ match }) => {
                );
             })}
          <div className={'game-stats-item'}>
-            <span className={'game-stats-item-title'}>Winner:</span>
+            <span className={'game-stats-item-title'}>Moves:</span>
          </div>
          <div className={'game-stats-item'}>
-            <span className={'game-stats-item-stat'}>
-               {match.winner ? match.winner : 'None'}
-            </span>
+            <span className={'game-stats-item-stat'}>{match.moves.length}</span>
          </div>
       </div>
    );
