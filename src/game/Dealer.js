@@ -34,7 +34,7 @@ function isGameOver(state) {
    Object.keys(players).forEach(k => {
       count = count + players[k].hits.length;
    });
-   return count + 1 === state.board.cards.length / 2;
+   return count && count === state.board.cards.length / 2;
 }
 
 function useShuffle(game, dispatch) {
@@ -92,17 +92,23 @@ const Dealer = () => {
 
             if (!mv.hit) dispatch(actions.switchCard(selectedCards));
 
-            const gameOver = isGameOver(game);
-            if (gameOver) {
-               dispatch(actions.endMatch(computeWinner(game), new Date()));
-            }
-
             // reset state
             setSelectedCards([]);
          }, game.switchCardTimeout);
          return () => clearTimeout(handle);
       }
    }, [game, selectedCards, dispatch]);
+
+   // check if game is over
+   useEffect(() => {
+      if (game.ended) {
+         return;
+      }
+      const gameOver = isGameOver(game);
+      if (gameOver) {
+         dispatch(actions.endMatch(computeWinner(game), new Date()));
+      }
+   }, [game, dispatch]);
 
    function handleClickCard(cardId) {
       if (game.ended || selectedCards.length >= 2) {
