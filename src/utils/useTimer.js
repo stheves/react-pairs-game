@@ -1,23 +1,23 @@
 import { useEffect, useRef, useState } from 'react';
 
-const useTimer = (startDate = new Date(), timeout = 1000) => {
+const useTimer = (startDate = new Date()) => {
    const [time, setTime] = useState(startDate);
    const handle = useRef(0);
 
-   function cancel() {
-      if (handle.current) {
-         clearInterval(handle.current);
-      }
+   useEffect(() => {
+      handle.current = setTimeout(tick, 1000);
+      return () => cancel();
+   });
+
+   function tick() {
+      setTime(new Date());
    }
 
-   useEffect(() => {
-      function handler() {
-         setTime(new Date());
+   function cancel() {
+      if (handle.current) {
+         clearTimeout(handle.current);
       }
-
-      handle.current = setTimeout(handler, timeout);
-      return () => cancel();
-   }, [time, timeout]);
+   }
 
    return { time, cancel };
 };
