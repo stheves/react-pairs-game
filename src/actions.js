@@ -1,16 +1,6 @@
 import types from './types';
 import { CARD_SIDE_BACK } from './board/CardComponent';
 
-const makeMove = (move, nextPlayer, nextRound, hit) => {
-   return {
-      type: types.MAKE_MOVE,
-      move: move,
-      nextPlayer: nextPlayer,
-      nextRound: nextRound,
-      hit: hit,
-   };
-};
-
 const generateCards = () => {
    const num = 20;
    const cards = [];
@@ -48,18 +38,22 @@ const roundStart = activePlayer => {
    return { type: types.ROUND_START, activePlayer: activePlayer };
 };
 
-const roundCommit = (moves, hit) => {
-   return { type: types.ROUND_COMMIT, moves: moves, hit: hit };
+const roundUpdate = movedCardId => {
+    return { type: types.ROUND_UPDATE, movedCardId: movedCardId };
+};
+
+const roundCommit = scored => {
+   return { type: types.ROUND_COMMIT, scored: scored };
 };
 
 export default {
+   roundUpdate,
    roundCommit,
    roundStart,
    selectCard,
    disableBoard,
    generateCards,
    switchCard,
-   makeMove,
    startMatch,
    resetGame,
    endMatch,

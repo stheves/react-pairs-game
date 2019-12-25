@@ -23,6 +23,7 @@ function startMatch(state, action) {
          ...state.match,
          startDate: new Date(),
          started: true,
+         roundStarted: true,
       },
    };
 }
@@ -31,69 +32,99 @@ function switchCard(state, action) {
    return { ...state, board: updateBoard(state, action) };
 }
 
-function updateHit(state, action) {
-   if (action.hit) {
-      return {
-         ...state.match.players,
-         [action.move.player]: {
-            hits: [...state.match.players[action.move.player].hits, action.hit],
-         },
-      };
-   } else {
-      return state.match.players;
-   }
+function roundStart(state, action) {
+   return {
+      ...state,
+      match: {
+         ...state.match,
+         roundStarted: true,
+         roundCommitted: false,
+         roundMoves: [],
+         roundScored: false,
+         activePlayer: action.activePlayer,
+      },
+   };
+}
+
+function roundUpdate(state, action) {
+   return {
+      ...state,
+      match: {
+         ...state.match,
+         roundMoves: [...state.match.roundMoves, action.movedCardId],
+      },
+   };
+}
+
+function roundCommit(action, state) {
+   const score = action.scored
+      ? state.match.score[state.match.activePlayer] + 1
+      : state.match.score[state.match.activePlayer];
+   const newScore = [...state.match.score];
+   newScore[state.match.activePlayer] = score;
+   return {
+      ...state,
+      match: {
+         ...state.match,
+         score: newScore,
+         roundCommitted: true,
+         roundScored: action.scored,
+      },
+   };
+}
+
+function selectCard(state, action) {
+   return {
+      ...state,
+      board: { ...state.board, selectedCard: action.id },
+   };
+}
+
+function disableBoard(state, action) {
+   return {
+      ...state,
+      board: {
+         ...state.board,
+         disabled: action.disable,
+      },
+   };
+}
+
+function matchEnd(state, action) {
+   return {
+      ...state,
+      match: {
+         ...state.match,
+         endDate: action.endedAt,
+         ended: true,
+         winner: action.winner,
+      },
+   };
 }
 
 const rootReducer = (state, action) => {
    switch (action.type) {
       case types.ROUND_START:
-         break;
+         return roundStart(state, action);
+      case types.ROUND_UPDATE:
+         return roundUpdate(state, action);
       case types.ROUND_COMMIT:
-         break;
+         return roundCommit(action, state);
       case types.SWITCH_CARD:
          return switchCard(state, action);
       case types.SELECT_CARD:
-         return {
-            ...state,
-            board: { ...state.board, selectedCard: action.id },
-         };
+         return selectCard(state, action);
       case types.DISABLE_BOARD:
-         return {
-            ...state,
-            board: {
-               ...state.board,
-               disabled: action.disabled,
-            },
-         };
-      case types.MAKE_MOVE:
-         return {
-            ...state,
-            match: {
-               ...state.match,
-               moves: [...state.match.moves, action.move],
-               activePlayer: action.nextPlayer,
-               round: action.nextRound,
-               players: updateHit(state, action),
-            },
-         };
+         return disableBoard(state, action);
       case types.MATCH_START:
          return startMatch(state, action);
+      case types.MATCH_END:
+         return matchEnd(state, action);
       case types.RESET_GAME:
          return { ...action.initialState };
-      case types.MATCH_END:
-         return {
-            ...state,
-            match: {
-               ...state.match,
-               endDate: action.endedAt,
-               ended: true,
-               winner: action.winner,
-            },
-         };
       default:
          return state;
    }
-   return state;
 };
 
 export default rootReducer;

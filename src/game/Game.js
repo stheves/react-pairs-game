@@ -18,14 +18,13 @@ const INITIAL_STATE = {
       endDate: null,
       ended: false,
       round: 1,
+      roundStarted: false,
+      roundCommitted: false,
+      roundMoves: [],
+      roundScored: false,
       winner: null,
-      activePlayer: 'One',
-      moves: [],
-      score: [],
-      players: {
-         One: { hits: [] },
-         Two: { hits: [] },
-      },
+      activePlayer: 0,
+      score: [0, 0],
    },
 };
 

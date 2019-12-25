@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import actions from '../actions';
 import Board from '../board/Board';
 import { useGame } from './Game';
 import MatchStats from './MatchStats';
 import ShoutBox from './ShoutBox';
+import { CARD_SIDE_BACK } from '../board/CardComponent';
 
 function shuffle(a) {
    for (let i = a.length - 1; i > 0; i--) {
@@ -11,30 +12,6 @@ function shuffle(a) {
       [a[i], a[j]] = [a[j], a[i]];
    }
    return a;
-}
-
-function computeWinner(state) {
-   let max = -1;
-   let winner = null;
-   Object.keys(state.match.players).forEach(k => {
-      const hitsCount = state.match.players[k].hits.length;
-      if (hitsCount > max) {
-         max = hitsCount;
-         winner = k;
-      } else if (hitsCount === max) {
-         winner = 'Draw';
-      }
-   });
-   return winner;
-}
-
-function isGameOver(state) {
-   let count = 0;
-   const players = state.match.players;
-   Object.keys(players).forEach(k => {
-      count = count + players[k].hits.length;
-   });
-   return count && count === state.board.cards.length / 2;
 }
 
 function useShuffle(game, dispatch) {
@@ -47,81 +24,90 @@ function useShuffle(game, dispatch) {
    }, [game.match.started, dispatch]);
 }
 
-function getCard(cards, id) {
-   return cards.find(c => c.id === id);
-}
-
-const nextPlayerId = match => {
-   const current = match.activePlayer;
-   const keys = Object.keys(match.players);
-   const next = keys.indexOf(current) + 1;
-   const nextIdx = next >= keys.length ? 0 : next;
-   return keys[nextIdx];
-};
-
-function createMove(match, cardIds) {
-   const activePlayerId = match.activePlayer;
-   return { player: activePlayerId, cards: cardIds };
+function filterCards(cards, side) {
+   return cards.filter(c => c.side === side);
 }
 
 const Dealer = () => {
    const [game, dispatch] = useGame();
-   const [selectedCards, setSelectedCards] = useState([]);
 
+   // runs after the match has started and shuffles the cards
    useShuffle(game, dispatch);
 
+   // runs after user selects a card
    useEffect(() => {
-      function moveCards() {
-         const nextPlayer = nextPlayerId(game.match);
-         const move = createMove(game.match, selectedCards);
-         const movesCount = game.match.moves.length;
-         const playersCount = Object.keys(game.match.players).length;
-         const nextRound = Math.floor((movesCount + 1) / playersCount) + 1;
-         const firstCard = getCard(game.board.cards, selectedCards[0]);
-         const secondCard = getCard(game.board.cards, selectedCards[1]);
-         const hasHit = Object.is(firstCard.value, secondCard.value);
-         const hit = hasHit ? [...selectedCards] : null;
-
-         return actions.makeMove(move, nextPlayer, nextRound, hit);
+      if (game.board.selectedCard) {
+         dispatch(actions.switchCard([game.board.selectedCard]));
+         dispatch(actions.roundUpdate(game.board.selectedCard));
       }
+   }, [dispatch, game.board.selectedCard]);
 
-      if (selectedCards.length === 2) {
-         const handle = setTimeout(() => {
-            const mv = moveCards();
-            dispatch(mv);
-
-            if (!mv.hit) dispatch(actions.switchCard(selectedCards));
-
-            // reset state
-            setSelectedCards([]);
-         }, game.switchCardTimeout);
-         return () => clearTimeout(handle);
-      }
-   }, [game, selectedCards, dispatch]);
-
-   // check if game is over
+   // runs after user selected both cards
    useEffect(() => {
-      if (game.match.ended) {
+      if (game.match.roundMoves.length === 2 && !game.match.roundCommitted) {
+         const [firstCard, secondCard] = game.match.roundMoves;
+         const scored =
+            game.board.cards[firstCard].value ===
+            game.board.cards[secondCard].value;
+         dispatch(actions.disableBoard(true));
+         dispatch(actions.roundCommit(scored));
+      }
+   }, [
+      dispatch,
+      game.match.roundMoves,
+      game.match.roundCommitted,
+      game.board.cards,
+   ]);
+
+   // detects when game is over
+   useEffect(() => {
+      if (!game.match.ended && game.match.roundCommitted) {
+         const gameOver =
+            filterCards(game.board.cards, CARD_SIDE_BACK).length === 0;
+         if (gameOver) {
+            const winner = game.match.score.indexOf(Math.max(game.match.score));
+            dispatch(actions.endMatch(winner, new Date()));
+         }
+      }
+   }, [
+      dispatch,
+      game.match.score,
+      game.match.ended,
+      game.match.roundCommitted,
+      game.board.cards,
+   ]);
+
+   // delays triggering of next round start after commit
+   useEffect(() => {
+      if (!game.match.roundCommitted || game.match.ended) {
          return;
       }
-      const gameOver = isGameOver(game);
-      if (gameOver) {
-         dispatch(actions.endMatch(computeWinner(game), new Date()));
-      }
-   }, [game, dispatch]);
+
+      const handle = setTimeout(() => {
+         // switch back the cards
+         if (!game.match.roundScored) {
+            dispatch(actions.switchCard(game.match.roundMoves));
+         }
+
+         // start next round
+         dispatch(actions.roundStart(game.match.activePlayer ? 0 : 1));
+         dispatch(actions.disableBoard(false));
+      }, game.switchCardTimeout);
+
+      return () => clearTimeout(handle);
+   }, [
+      game.match.ended,
+      game.match.roundCommitted,
+      game.match.roundScored,
+      game.match.roundMoves,
+      game.match.activePlayer,
+      game.switchCardTimeout,
+      dispatch,
+   ]);
 
    function getStyleForPlayer(playerId) {
-      return Object.keys(game.match.players).indexOf(playerId) === 0
-         ? 'red'
-         : 'blue';
-   }
-
-   function handleClickCard(cardId) {
-      if (game.match.ended || selectedCards.length >= 2) {
-         return;
-      }
-      setSelectedCards([...selectedCards, cardId]);
-      dispatch(actions.switchCard([cardId]));
+      let color = game.playerColor[playerId] || game.playerColor[0];
+      return { backgroundColor: color };
    }
 
    if (!game.match.started) {
@@ -131,7 +117,7 @@ const Dealer = () => {
    let style = getStyleForPlayer(game.match.activePlayer);
 
    let shoutTitle = 'Round ' + game.match.round;
-   let shoutMsg = 'Player ' + game.match.activePlayer;
+   let shoutMsg = 'Player ' + (game.match.activePlayer === 0 ? 'One' : 'Two');
    if (game.match.winner) {
       shoutTitle = 'Game Over';
       shoutMsg = 'Winner ' + game.match.winner;
@@ -140,8 +126,8 @@ const Dealer = () => {
    return (
       <React.Fragment>
          <MatchStats match={game.match} />
-         <ShoutBox title={shoutTitle} msg={shoutMsg} bgClass={style} />
-         <Board onClickCard={handleClickCard} board={game.board} />
+         <ShoutBox title={shoutTitle} msg={shoutMsg} style={style} />
+         <Board board={game.board} />
       </React.Fragment>
    );
 };

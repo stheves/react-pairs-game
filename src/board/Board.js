@@ -1,29 +1,28 @@
 import React from 'react';
 import Layout from './Layout';
 import CardComponent from './CardComponent';
-import PropTypes from 'prop-types';
+import { useGame } from '../game/Game';
+import actions from '../actions';
 
-const Board = ({ onClickCard, board }) => {
-   const Cards = board.cards.map((card, i) => (
+const Board = () => {
+   const [game, dispatch] = useGame();
+
+   function handleClickCard(cardId) {
+      if (game.board.disabled) {
+         return;
+      }
+      dispatch(actions.selectCard(cardId));
+   }
+
+   const Cards = game.board.cards.map((card, i) => (
       <CardComponent
          key={i}
          card={card}
-         onCardClick={() => onClickCard(card.id)}
+         onCardClick={() => handleClickCard(card.id)}
       />
    ));
 
    return <Layout>{Cards}</Layout>;
-};
-
-Board.propTypes = {
-   onClickCard: PropTypes.func,
-   board: PropTypes.object,
-};
-
-// noinspection JSUnusedGlobalSymbols
-Board.defaultProps = {
-   onClickCard: () => {},
-   board: { cards: [] },
 };
 
 export default Board;
