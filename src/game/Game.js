@@ -6,16 +6,22 @@ import GameContainer from './GameContainer';
 const INITIAL_STATE = {
    switchCardTimeout: 3000,
    board: {
-      frozen: false,
+      disabled: false,
       cards: [],
+      highlighted: [],
+      selectedCard: null,
    },
+   playerColor: ['darkred', 'darkblue'],
    match: {
-      started: null,
-      ended: null,
+      started: false,
+      startDate: null,
+      endDate: null,
+      ended: false,
       round: 1,
       winner: null,
       activePlayer: 'One',
       moves: [],
+      score: [],
       players: {
          One: { hits: [] },
          Two: { hits: [] },

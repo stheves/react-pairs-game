@@ -10,8 +10,6 @@ const MatchStats = ({ match }) => {
    useEffect(() => {
       if (match.ended) {
          timer.stop();
-      } else {
-         timer.restart();
       }
    }, [timer, match.ended]);
 
@@ -30,7 +28,7 @@ const MatchStats = ({ match }) => {
          </div>
          <div className={'game-stats-item'}>
             <span className={'game-stats-item-stat'}>
-               {match.ended ? match.ended.toLocaleTimeString() : 'Not yet'}
+               {match.ended ? match.endDate.toLocaleTimeString() : 'Not yet'}
             </span>
          </div>
          <div className={'game-stats-item'}>

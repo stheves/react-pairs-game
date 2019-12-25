@@ -28,7 +28,7 @@ const endMatch = (winner, endedAt) => {
    return { type: types.MATCH_END, winner: winner, endedAt: endedAt };
 };
 
-const switchCard = (cardIds=[]) => {
+const switchCard = (cardIds = []) => {
    return { type: types.SWITCH_CARD, ids: cardIds };
 };
 
@@ -36,7 +36,27 @@ const resetGame = initState => {
    return { type: types.RESET_GAME, initialState: initState };
 };
 
+const disableBoard = disable => {
+   return { type: types.DISABLE_BOARD, disable: disable };
+};
+
+const selectCard = cardId => {
+   return { type: types.SELECT_CARD, id: cardId };
+};
+
+const roundStart = activePlayer => {
+   return { type: types.ROUND_START, activePlayer: activePlayer };
+};
+
+const roundCommit = (moves, hit) => {
+   return { type: types.ROUND_COMMIT, moves: moves, hit: hit };
+};
+
 export default {
+   roundCommit,
+   roundStart,
+   selectCard,
+   disableBoard,
    generateCards,
    switchCard,
    makeMove,

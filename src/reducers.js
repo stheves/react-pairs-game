@@ -21,7 +21,8 @@ function startMatch(state, action) {
       board: { cards: action.cards },
       match: {
          ...state.match,
-         started: new Date(),
+         startDate: new Date(),
+         started: true,
       },
    };
 }
@@ -45,8 +46,25 @@ function updateHit(state, action) {
 
 const rootReducer = (state, action) => {
    switch (action.type) {
+      case types.ROUND_START:
+         break;
+      case types.ROUND_COMMIT:
+         break;
       case types.SWITCH_CARD:
          return switchCard(state, action);
+      case types.SELECT_CARD:
+         return {
+            ...state,
+            board: { ...state.board, selectedCard: action.id },
+         };
+      case types.DISABLE_BOARD:
+         return {
+            ...state,
+            board: {
+               ...state.board,
+               disabled: action.disabled,
+            },
+         };
       case types.MAKE_MOVE:
          return {
             ...state,
@@ -67,13 +85,15 @@ const rootReducer = (state, action) => {
             ...state,
             match: {
                ...state.match,
-               ended: action.endedAt,
+               endDate: action.endedAt,
+               ended: true,
                winner: action.winner,
             },
          };
       default:
          return state;
    }
+   return state;
 };
 
 export default rootReducer;
