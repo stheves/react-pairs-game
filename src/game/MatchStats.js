@@ -1,14 +1,18 @@
 import React, { useEffect } from 'react';
 import './MatchStats.css';
 import PropTypes from 'prop-types';
-import useTimer from '../utils/useTimer';
+import { formatMillis, useTimer } from '../utils';
 
 const MatchStats = ({ match }) => {
-   const timer = useTimer(match.started);
+   const timer = useTimer();
 
-   // cancel timer when game is over
+   // stop timer when game is over and start it otherwise
    useEffect(() => {
-      timer.cancel();
+      if (match.ended) {
+         timer.stop();
+      } else {
+         timer.restart();
+      }
    }, [timer, match.ended]);
 
    return (
@@ -18,7 +22,7 @@ const MatchStats = ({ match }) => {
          </div>
          <div className={'game-stats-item'}>
             <span className={'game-stats-item-stat'}>
-               {match.started ? timer.time.toLocaleTimeString() : 'Not yet'}
+               {match.started ? formatMillis(timer.elapsed) : 'Not yet'}
             </span>
          </div>
          <div className={'game-stats-item'}>

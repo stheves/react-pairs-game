@@ -1,25 +1,44 @@
 import { useEffect, useRef, useState } from 'react';
 
-const useTimer = (startDate = new Date()) => {
-   const NO_HANDLE = -1;
-   const [time, setTime] = useState(startDate);
+const NO_HANDLE = -1;
+const useTimer = () => {
+   const [startMillis, setStartMillis] = useState(Date.now());
+   const [elapsed, setElapsed] = useState(0);
+   const [stopped, setStopped] = useState(null);
    const handle = useRef(NO_HANDLE);
 
    useEffect(() => {
-      handle.current = setTimeout(tick, 1000);
-      return () => cancel();
-   });
-
-   function tick() {
-      setTime(new Date());
-   }
-
-   function cancel() {
-      if (handle.current !== NO_HANDLE) {
-         clearTimeout(handle.current);
+      function tick() {
+         const elapsed = Date.now() - startMillis;
+         setElapsed(elapsed);
       }
+
+      function cancel() {
+         handle.current && clearInterval(handle.current);
+      }
+
+      if (!stopped) {
+         handle.current = setInterval(tick, 1000);
+      }
+
+      return () => cancel();
+   }, [stopped, startMillis]);
+
+   function stop() {
+      setStopped(true);
    }
 
-   return { time, cancel };
+   function start() {
+      setStopped(false);
+   }
+
+   function restart() {
+      setStopped(false);
+      setStartMillis(Date.now());
+      setElapsed(0);
+   }
+
+   // noinspection JSUnusedGlobalSymbols
+   return { elapsed, start, stop, restart };
 };
 export default useTimer;
