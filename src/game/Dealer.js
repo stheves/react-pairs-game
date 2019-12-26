@@ -69,7 +69,9 @@ const Dealer = () => {
          const gameOver =
             filterCards(game.board.cards, CARD_SIDE_BACK).length === 0;
          if (gameOver) {
-            const winner = game.match.score.indexOf(Math.max(game.match.score));
+            const winner = game.match.score.indexOf(
+               Math.max(...game.match.score),
+            );
             dispatch(actions.endMatch(winner, new Date()));
          }
       }
