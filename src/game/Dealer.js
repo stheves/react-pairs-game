@@ -28,6 +28,10 @@ function filterCards(cards, side) {
    return cards.filter(c => c.side === side);
 }
 
+function getCardById(cards, cardId) {
+   return cards.find(c => c.id === cardId);
+}
+
 const Dealer = () => {
    const [game, dispatch] = useGame();
 
@@ -47,8 +51,8 @@ const Dealer = () => {
       if (game.match.roundMoves.length === 2 && !game.match.roundCommitted) {
          const [firstCard, secondCard] = game.match.roundMoves;
          const scored =
-            game.board.cards[firstCard].value ===
-            game.board.cards[secondCard].value;
+            getCardById(game.board.cards, firstCard).value ===
+            getCardById(game.board.cards, secondCard).value;
          dispatch(actions.disableBoard(true));
          dispatch(actions.roundCommit(scored));
       }

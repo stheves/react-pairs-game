@@ -3,6 +3,8 @@ import { CARD_SIDE_BACK, CARD_SIDE_FRONT } from './board/CardComponent';
 
 function updateBoard(state, action) {
    return {
+      ...state.board,
+      selectedCard: null,
       cards: state.board.cards.map(card => {
          if (action.ids.includes(card.id)) {
             const side =
@@ -18,7 +20,7 @@ function updateBoard(state, action) {
 function startMatch(state, action) {
    return {
       ...state,
-      board: { cards: action.cards },
+      board: { ...state.board, cards: action.cards, selectedCard: null },
       match: {
          ...state.match,
          startDate: new Date(),

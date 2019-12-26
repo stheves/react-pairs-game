@@ -39,7 +39,7 @@ const roundStart = activePlayer => {
 };
 
 const roundUpdate = movedCardId => {
-    return { type: types.ROUND_UPDATE, movedCardId: movedCardId };
+   return { type: types.ROUND_UPDATE, movedCardId: movedCardId };
 };
 
 const roundCommit = scored => {
