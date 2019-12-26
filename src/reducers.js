@@ -4,7 +4,6 @@ import { CARD_SIDE_BACK, CARD_SIDE_FRONT } from './board/CardComponent';
 function updateBoard(state, action) {
    return {
       ...state.board,
-      selectedCard: null,
       cards: state.board.cards.map(card => {
          if (action.ids.includes(card.id)) {
             const side =
