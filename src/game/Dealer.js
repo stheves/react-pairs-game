@@ -32,6 +32,10 @@ function getCardById(cards, cardId) {
    return cards.find(c => c.id === cardId);
 }
 
+function getPlayerName(playerId) {
+   return playerId === 0 ? 'One' : 'Two';
+}
+
 const Dealer = () => {
    const [game, dispatch] = useGame();
 
@@ -123,10 +127,10 @@ const Dealer = () => {
    let style = getStyleForPlayer(game.match.activePlayer);
 
    let shoutTitle = 'Round ' + game.match.round;
-   let shoutMsg = 'Player ' + (game.match.activePlayer === 0 ? 'One' : 'Two');
+   let shoutMsg = 'Player ' + getPlayerName(game.match.activePlayer);
    if (game.match.winner) {
       shoutTitle = 'Game Over';
-      shoutMsg = 'Winner ' + game.match.winner;
+      shoutMsg = 'Winner ' + getPlayerName(game.match.winner);
       style = getStyleForPlayer(game.match.winner);
    }
    return (
