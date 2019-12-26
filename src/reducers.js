@@ -38,6 +38,7 @@ function roundStart(state, action) {
       ...state,
       match: {
          ...state.match,
+         round: state.match.round + 1,
          roundStarted: true,
          roundCommitted: false,
          roundMoves: [],

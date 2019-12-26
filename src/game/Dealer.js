@@ -94,7 +94,7 @@ const Dealer = () => {
          }
 
          // start next round
-         dispatch(actions.roundStart(game.match.activePlayer ? 0 : 1));
+         dispatch(actions.roundStart(game.match.activePlayer === 0 ? 1 : 0));
          dispatch(actions.disableBoard(false));
       }, game.switchCardTimeout);
 
