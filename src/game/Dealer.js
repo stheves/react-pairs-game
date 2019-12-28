@@ -5,6 +5,7 @@ import { useGame } from './Game';
 import MatchStats from './MatchStats';
 import ShoutBox from './ShoutBox';
 import { CARD_SIDE_BACK } from '../board/CardComponent';
+import { getPlayerName } from '../utils';
 
 function shuffle(a) {
    for (let i = a.length - 1; i > 0; i--) {
@@ -24,7 +25,7 @@ function useShuffle(game, dispatch) {
    }, [game.match.started, dispatch]);
 }
 
-function filterCards(cards, side) {
+function filterCardsBySide(cards, side) {
    return cards.filter(c => c.side === side);
 }
 
@@ -32,8 +33,8 @@ function getCardById(cards, cardId) {
    return cards.find(c => c.id === cardId);
 }
 
-function getPlayerName(playerId) {
-   return playerId === 0 ? 'One' : 'Two';
+function nextActivePlayer(currentPlayerId) {
+   return currentPlayerId === 0 ? 1 : 0;
 }
 
 const Dealer = () => {
@@ -71,7 +72,7 @@ const Dealer = () => {
    useEffect(() => {
       if (!game.match.ended && game.match.roundCommitted) {
          const gameOver =
-            filterCards(game.board.cards, CARD_SIDE_BACK).length === 0;
+            filterCardsBySide(game.board.cards, CARD_SIDE_BACK).length === 0;
          if (gameOver) {
             const winner = game.match.score.indexOf(
                Math.max(...game.match.score),
@@ -100,7 +101,8 @@ const Dealer = () => {
          }
 
          // start next round
-         dispatch(actions.roundStart(game.match.activePlayer === 0 ? 1 : 0));
+         const nextActive = nextActivePlayer(game.match.activePlayer);
+         dispatch(actions.roundStart(nextActive));
          dispatch(actions.disableBoard(false));
       }, game.switchCardTimeout);
 
@@ -127,7 +129,7 @@ const Dealer = () => {
    let style = getStyleForPlayer(game.match.activePlayer);
 
    let shoutTitle = 'Round ' + game.match.round;
-   let shoutMsg = 'Player ' + getPlayerName(game.match.activePlayer);
+   let shoutMsg = getPlayerName(game.match.activePlayer);
    if (game.match.winner) {
       shoutTitle = 'Game Over';
       shoutMsg = 'Winner ' + getPlayerName(game.match.winner);

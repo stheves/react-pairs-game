@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import './MatchStats.css';
 import PropTypes from 'prop-types';
-import { formatMillis, useTimer } from '../utils';
+import { formatMillis, getPlayerName, useTimer } from '../utils';
 
 const MatchStats = ({ match }) => {
    const timer = useTimer();
@@ -44,7 +44,7 @@ const MatchStats = ({ match }) => {
                <React.Fragment key={i}>
                   <div className={'game-stats-item'}>
                      <span className={'game-stats-item-title'}>
-                        Player {i} Pairs:
+                        {getPlayerName(i)} Pairs:
                      </span>
                   </div>
                   <div className={'game-stats-item'}>
@@ -54,10 +54,12 @@ const MatchStats = ({ match }) => {
             );
          })}
          <div className={'game-stats-item'}>
-            <span className={'game-stats-item-title'}>Round Moves:</span>
+            <span className={'game-stats-item-title'}>Moves:</span>
          </div>
          <div className={'game-stats-item'}>
-            <span className={'game-stats-item-stat'}>{match.roundMoves.length}</span>
+            <span className={'game-stats-item-stat'}>
+               {match.roundMoves.length}/2
+            </span>
          </div>
       </div>
    );
