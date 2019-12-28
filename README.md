@@ -1,3 +1,6 @@
-# Pairs Game in ReactJS
+# React Pairs Game
 
-just to learn React!
+Simple game just to learn React.
+
+## Screenshot
+![React Pairs Game](./game.png "React Pairs Game")
