@@ -3,6 +3,10 @@ import './MatchStats.css';
 import PropTypes from 'prop-types';
 import { formatMillis, getPlayerName, useTimer } from '../utils';
 
+function getWinnerName(match) {
+   return match.winner !== -1 ? getPlayerName(match.winner) : 'Draw';
+}
+
 const MatchStats = ({ match }) => {
    const { elapsed, stop, restart } = useTimer();
 
@@ -30,7 +34,7 @@ const MatchStats = ({ match }) => {
          </div>
          <div className={'game-stats-item'}>
             <span className={'game-stats-item-stat'}>
-               {match.ended ? match.endDate.toLocaleTimeString() : 'Not yet'}
+               {match.ended ? match.endDate.toLocaleTimeString() : 'N/A'}
             </span>
          </div>
          <div className={'game-stats-item'}>
@@ -38,8 +42,7 @@ const MatchStats = ({ match }) => {
          </div>
          <div className={'game-stats-item'}>
             <span className={'game-stats-item-stat'}>
-               {match.winner &&
-                  (match.winner !== -1 ? getPlayerName(match.winner) : 'Draw')}
+               {match.winner ? getWinnerName(match) : 'N/A'}
             </span>
          </div>
          {match.score.map((s, i) => {
