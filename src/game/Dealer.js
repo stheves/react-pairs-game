@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import actions from '../actions';
 import { useGame } from './Game';
 import { CARD_SIDE_BACK } from '../board/CardComponent';
@@ -49,7 +49,7 @@ const Dealer = () => {
 
    // runs after user selected both cards
    useEffect(() => {
-      if (game.match.roundMoves.length === 2) {
+      if (game.match.roundMoves.length === 2 && !game.match.roundCommitted) {
          const [firstCard, secondCard] = game.match.roundMoves;
          const scored =
             getCardById(game.board.cards, firstCard).value ===
@@ -57,7 +57,12 @@ const Dealer = () => {
          dispatch(actions.disableBoard(true));
          dispatch(actions.roundCommit(scored));
       }
-   }, [dispatch, game.match.roundMoves, game.board.cards]);
+   }, [
+      dispatch,
+      game.match.roundMoves,
+      game.board.cards,
+      game.match.roundCommitted,
+   ]);
 
    // detects when game is over
    useEffect(() => {
