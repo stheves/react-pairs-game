@@ -4,14 +4,16 @@ import PropTypes from 'prop-types';
 import { formatMillis, getPlayerName, useTimer } from '../utils';
 
 const MatchStats = ({ match }) => {
-   const timer = useTimer();
+   const { elapsed, stop, restart } = useTimer();
 
    // stop timer when game is over and start it otherwise
    useEffect(() => {
       if (match.ended) {
-         timer.stop();
+         stop();
+      } else if (match.started) {
+         restart();
       }
-   }, [timer, match.ended]);
+   }, [stop, restart, match.ended, match.started]);
 
    return (
       <div className={'game-stats'}>
@@ -20,7 +22,7 @@ const MatchStats = ({ match }) => {
          </div>
          <div className={'game-stats-item'}>
             <span className={'game-stats-item-stat'}>
-               {match.started ? formatMillis(timer.elapsed) : 'Not yet'}
+               {match.started ? formatMillis(elapsed) : 'Not yet'}
             </span>
          </div>
          <div className={'game-stats-item'}>
