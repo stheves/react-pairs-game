@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './ShoutBox.css';
+import './Scoreboard.css';
 
-const ShoutBox = ({ title, msg, style }) => {
+const Scoreboard = ({ title, msg, style }) => {
    return (
       <div className={`round-counter padding`} style={style}>
          <h1 className={'round-stat no-margin'}>{title}</h1>
@@ -11,10 +11,10 @@ const ShoutBox = ({ title, msg, style }) => {
    );
 };
 
-ShoutBox.propTypes = {
+Scoreboard.propTypes = {
    title: PropTypes.string.isRequired,
    msg: PropTypes.string.isRequired,
    style: PropTypes.object.isRequired,
 };
 
-export default ShoutBox;
+export default Scoreboard;

@@ -5,7 +5,7 @@ import actions from '../actions';
 import Dealer from './Dealer';
 import PropTypes from 'prop-types';
 import MatchStats from './MatchStats';
-import ShoutBox from './ShoutBox';
+import Scoreboard from './Scoreboard';
 import Board from '../board/Board';
 import { getPlayerName } from '../utils';
 import { useGame } from './Game';
@@ -33,7 +33,7 @@ const GameContainer = ({ initialState }) => {
          <Menu onStartClick={() => dispatch(actions.resetGame(initialState))} />
          <Dealer />
          <MatchStats match={game.match} />
-         <ShoutBox title={shoutTitle} msg={shoutMsg} style={style} />
+         <Scoreboard title={shoutTitle} msg={shoutMsg} style={style} />
          <Board board={game.board} />
       </div>
    );
