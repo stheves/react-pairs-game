@@ -22,7 +22,7 @@ const MatchStats = ({ match }) => {
    return (
       <div className={'game-stats'}>
          <div className={'game-stats-item'}>
-            <span className={'game-stats-item-title'}>Started:</span>
+            <span className={'game-stats-item-title'}>Elapsed:</span>
          </div>
          <div className={'game-stats-item'}>
             <span className={'game-stats-item-stat'}>
