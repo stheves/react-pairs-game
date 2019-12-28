@@ -36,7 +36,7 @@ const MatchStats = ({ match }) => {
          </div>
          <div className={'game-stats-item'}>
             <span className={'game-stats-item-stat'}>
-               {match.winner ? match.winner : 'None'}
+               {match.winner !== -1 ? getPlayerName(match.winner) : 'None'}
             </span>
          </div>
          {match.score.map((s, i) => {

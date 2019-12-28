@@ -53,7 +53,7 @@ const Dealer = () => {
 
    // runs after user selected both cards
    useEffect(() => {
-      if (game.match.roundMoves.length === 2 && !game.match.roundCommitted) {
+      if (game.match.roundMoves.length === 2) {
          const [firstCard, secondCard] = game.match.roundMoves;
          const scored =
             getCardById(game.board.cards, firstCard).value ===
@@ -61,12 +61,7 @@ const Dealer = () => {
          dispatch(actions.disableBoard(true));
          dispatch(actions.roundCommit(scored));
       }
-   }, [
-      dispatch,
-      game.match.roundMoves,
-      game.match.roundCommitted,
-      game.board.cards,
-   ]);
+   }, [dispatch, game.match.roundMoves, game.board.cards]);
 
    // detects when game is over
    useEffect(() => {
