@@ -1,11 +1,7 @@
 import React, { useEffect } from 'react';
 import actions from '../actions';
-import Board from '../board/Board';
 import { useGame } from './Game';
-import MatchStats from './MatchStats';
-import ShoutBox from './ShoutBox';
 import { CARD_SIDE_BACK } from '../board/CardComponent';
-import { getPlayerName } from '../utils';
 
 function shuffle(a) {
    for (let i = a.length - 1; i > 0; i--) {
@@ -112,31 +108,8 @@ const Dealer = () => {
       dispatch,
    ]);
 
-   function getStyleForPlayer(playerId) {
-      let color = game.playerColor[playerId] || game.playerColor[0];
-      return { backgroundColor: color };
-   }
-
-   if (!game.match.started) {
-      return null;
-   }
-
-   let style = getStyleForPlayer(game.match.activePlayer);
-
-   let shoutTitle = 'Round ' + game.match.round;
-   let shoutMsg = getPlayerName(game.match.activePlayer);
-   if (game.match.winner) {
-      shoutTitle = 'Game Over';
-      shoutMsg = 'Winner ' + getPlayerName(game.match.winner);
-      style = getStyleForPlayer(game.match.winner);
-   }
-   return (
-      <React.Fragment>
-         <MatchStats match={game.match} />
-         <ShoutBox title={shoutTitle} msg={shoutMsg} style={style} />
-         <Board board={game.board} />
-      </React.Fragment>
-   );
+   // only logic
+   return null;
 };
 
 export default Dealer;
