@@ -65,7 +65,7 @@ const Dealer = () => {
 
    // detects when game is over
    useEffect(() => {
-      if (!game.match.ended && game.match.roundCommitted) {
+      if (game.match.roundCommitted) {
          const gameOver =
             filterCardsBySide(game.board.cards, CARD_SIDE_BACK).length === 0;
          if (gameOver) {
@@ -78,7 +78,6 @@ const Dealer = () => {
    }, [
       dispatch,
       game.match.score,
-      game.match.ended,
       game.match.roundCommitted,
       game.board.cards,
    ]);
@@ -98,6 +97,7 @@ const Dealer = () => {
          // start next round
          const nextActive = nextActivePlayer(game.match.activePlayer);
          dispatch(actions.roundStart(nextActive));
+         dispatch(actions.selectCard(null));
          dispatch(actions.disableBoard(false));
       }, game.switchCardTimeout);
 

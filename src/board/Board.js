@@ -8,7 +8,7 @@ const Board = () => {
    const [game, dispatch] = useGame();
 
    function handleClickCard(cardId) {
-      if (game.board.disabled || game.board.selectedCard === cardId) {
+      if (game.board.disabled) {
          return;
       }
       dispatch(actions.selectCard(cardId));
