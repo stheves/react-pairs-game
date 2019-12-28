@@ -25,6 +25,7 @@ function startMatch(state, action) {
          startDate: new Date(),
          started: true,
          roundStarted: true,
+         winner: null,
       },
    };
 }

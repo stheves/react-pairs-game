@@ -22,7 +22,7 @@ const INITIAL_STATE = {
       roundCommitted: false,
       roundMoves: [],
       roundScored: false,
-      winner: null,
+      winner: -1,
       activePlayer: 0,
       score: [0, 0],
    },
